@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="wrapper">
+    <div class="">
         <h2 class="title">
             <slot name="title" class="title"></slot>
         </h2>
@@ -45,13 +45,6 @@
 </template>
 
 <style scoped>
-.wrapper {
-    margin: 50px;
-    border: 1px solid #d2d2d2;
-    border-radius: 5px;
-    padding: 50px;
-}
-
 .title {
     font-size: 24px;
     font-weight: bold;

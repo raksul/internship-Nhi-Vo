@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
 import axios from "axios"
+import { useInventoriesStore } from "@/stores/inventories";
+import ProductModal from "./ProductModal.vue";
 
-const BASE_URL = "http://localhost:3000/"
+const store = useInventoriesStore()
+const { fetchData } = useInventoriesStore()
+
+onMounted(() => {
+    fetchData()
+})
 
 const labels = [
     "Image",
@@ -17,20 +24,13 @@ const labels = [
 ];
 
 const isShow = ref(false)
-const inventories: any = ref([])
 const currentItem: any = ref(null)
-
-axios
-    .get(BASE_URL + 'inventories')
-    .then(res => {
-        inventories.value = res.data
-    })
 
 const warrantyDisplay = (date: string) => {
     return Date.parse(date) < Date.now() ? "Expired" : date.substring(0, 10)
 }
 
-const showModal = (item: any) => {
+const showModal = (item: Object) => {
     currentItem.value = item
     console.log(currentItem.value)
     isShow.value = true
@@ -53,7 +53,7 @@ const closeModal = () => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in inventories" :key="item.id" @click="showModal(item)">
+            <tr v-for="item in store.inventories" :key="item.id" @click="showModal(item)">
                 <td data-label="Image"><img class="thumbnail" :src="item.images[0]" alt=""></td>
                 <td data-label="Brand">{{ item.model.brand }}</td>
                 <td data-label="Model">{{ item.model.name }}</td>
@@ -65,6 +65,7 @@ const closeModal = () => {
                 <td data-label="Mark as sold"><button :disabled="item.is_sold">Sold</button></td>
             </tr>
         </tbody>
+        <ProductModal v-if="isShow" @close="closeModal" :item="currentItem" />
     </table>
 </template>
 

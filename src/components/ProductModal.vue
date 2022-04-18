@@ -1,13 +1,17 @@
-<script setup lang="ts">
+<script setup lang="ts">import { useInventoriesStore } from '@/stores/inventories';
+import { onMounted } from 'vue';
+
+const props = defineProps(['item'])
 defineEmits(['close'])
+
 </script>
 
-<template>
+<template v-if="props.item">
     <div class="modal-backdrop">
         <div class="modal">
             <header class="modal-header">
                 <slot name="header">
-                    Model name
+                    {{ props.item.model.name }}
                 </slot>
                 <button type="button" class="btn-close" @click="$emit('close')">
                     x
