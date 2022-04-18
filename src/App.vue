@@ -7,10 +7,12 @@ import AddView from "./views/AddView.vue";
 <template>
   <main>
     <div class="app-bar">
-      Logo
+      <RouterLink to="/" class="branding">
+        2ndMobile
+        <font-awesome-icon :icon="['fas', 'mobile-screen-button']" />
+      </RouterLink>
     </div>
-    <HomeView />
-    <!-- <AddView /> -->
+    <RouterView />
   </main>
 </template>
 
@@ -24,5 +26,12 @@ import AddView from "./views/AddView.vue";
   font-weight: bold;
   font-size: 20px;
   padding: 10px;
+  text-decoration: none;
+}
+
+.branding {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>

@@ -32,6 +32,14 @@
                 <span class="label">Price</span>
                 <input type="number">
             </div>
+            <div class="input-field">
+                <span class="label">Warranty</span>
+                <input type="date">
+            </div>
+            <div class="input-field">
+                <span class="label">Condition</span>
+                <input type="text">
+            </div>
         </form>
     </div>
 </template>
@@ -60,6 +68,23 @@
 .input-field {
     flex-basis: 50%;
     padding: 10px 50px 20px 0px;
+}
+
+@media (max-width: 900px) {
+
+    .wrapper {
+        padding: 15px;
+    }
+
+    .wrapper form {
+        padding: 0px
+    }
+
+    .input-field {
+        margin: 0;
+        flex-basis: 100%;
+        padding: 20px 0px 10px 0px;
+    }
 }
 
 .input-field input {
