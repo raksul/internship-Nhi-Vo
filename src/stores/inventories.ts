@@ -22,24 +22,30 @@ export type Inventory = {
   images: Array<string>;
 };
 
+const BASE_URL = "http://localhost:3000/inventories";
+
 export const useInventoriesStore = defineStore({
   id: "inventories",
   state: () => ({
     inventories: [] as Inventory[],
     inventory: {} as Inventory,
+    edit: { status: false, id: null },
   }),
   actions: {
     async fetchData() {
       await axios
-        .get("http://localhost:3000/inventories")
+        .get(BASE_URL)
         .then((res) => (this.inventories = res.data))
         .catch((err) => console.log(err));
     },
     async fetchDataById(id: number) {
       await axios
-        .get(`http://localhost:3000/inventories/${id}`)
+        .get(`${BASE_URL}/${id}`)
         .then((res) => (this.inventory = res.data))
         .catch((err) => console.log(err));
+    },
+    async addInventory() {
+      await axios.post(BASE_URL, {});
     },
   },
 });

@@ -1,71 +1,173 @@
-<script setup lang="ts">
+<script setup lang="ts">import { ref } from 'vue';
+import { useInventoriesStore } from "../stores/inventories";
+
+const store = useInventoriesStore()
+
+const formData = {
+    model: null,
+    memory_size: null,
+    os_version: null,
+    color: null,
+    price: null,
+    warranty_date: new Date(Date.now()).toISOString().slice(0, 10),
+    condition: null,
+    images: []
+}
 
 </script>
 
 <template>
-    <div class="">
+    <div class="wrapper">
         <h2 class="title">
             <slot name="title" class="title"></slot>
         </h2>
         <form action="">
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Brand</span>
                 <input type="text">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Model</span>
                 <input type="text">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Memory Size</span>
                 <input type="number">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">OS Version</span>
                 <input type="text">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Color</span>
                 <input type="text">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Price</span>
                 <input type="number">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Warranty</span>
                 <input type="date">
             </div>
-            <div class="input-field">
+            <div class="input-group">
                 <span class="label">Condition</span>
                 <input type="text">
             </div>
+            <div class="input-group image-upload">
+                <span class="label">Image</span>
+                <input type="file">
+            </div>
+
+            <div class="btn-container">
+                <div>
+
+                    <router-link to="/"><button class="btn-back">Back</button></router-link>
+                    <button class="btn-delete">Delete</button>
+                </div>
+
+                <button v-if="!store.edit.status" class="btn-save">Add</button>
+                <button v-else class="btn-save">Save</button>
+            </div>
         </form>
+
     </div>
 </template>
 
 <style scoped>
+.wrapper {
+    width: 60vw;
+    justify-self: center;
+    border: 1px solid #d2d2d2;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 50px auto;
+
+}
+
 .title {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .wrapper form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 50px;
+    padding: 20px;
 }
 
-.input-field {
+.input-group {
     flex-basis: 50%;
-    padding: 10px 50px 20px 0px;
+    padding: 20px 20px 20px 0px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    font-size: 1rem;
+    border: 2px solid #d2d2d2;
+    border-radius: 10px;
+}
+
+.input-group input:focus {
+    border: 2px solid var(--primary-color);
+}
+
+.image-upload input {
+    border: 2px solid var(--primary-color);
+}
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+button {
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-save {
+    background-color: var(--primary-color);
+}
+
+.btn-save:hover {
+    background-color: #91b2ff;
+}
+
+.btn-back {
+    background-color: #c7c7c7;
+}
+
+.btn-back:hover {
+    background-color: #d2d2d2;
+}
+
+.btn-delete {
+    background-color: #fe8b8b;
+    margin-left: 5px;
+}
+
+router-link {
+    text-decoration: none;
+    color: #fff;
 }
 
 @media (max-width: 900px) {
-
     .wrapper {
+        width: 80vw;
         padding: 15px;
     }
 
@@ -73,19 +175,15 @@
         padding: 0px
     }
 
-    .input-field {
+    .input-group {
         margin: 0;
         flex-basis: 100%;
-        padding: 20px 0px 10px 0px;
+        padding: 20px 0px 20px 0px;
+    }
+
+    .btn-container {
+        width: 100%;
     }
 }
-
-.input-field input {
-    width: 100%;
-    padding: 15px;
-    margin-top: 10px;
-    font-size: 1rem;
-    border: 1px solid #d2d2d2;
-    border-radius: 5px;
-}
 </style>
+

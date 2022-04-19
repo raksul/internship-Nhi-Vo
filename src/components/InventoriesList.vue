@@ -91,11 +91,11 @@ table {
     background-color: var(--primary-color);
     color: #ffffff;
     font-weight: bold;
-
 }
 
 .table tbody tr:hover {
     background-color: rgb(241, 241, 241);
+    cursor: pointer;
 }
 
 @media (max-width: 900px) {

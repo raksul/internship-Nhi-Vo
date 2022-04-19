@@ -1,8 +1,14 @@
 <script setup lang="ts">import { useInventoriesStore } from '@/stores/inventories';
-import { onMounted } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps(['item'])
 defineEmits(['close'])
+
+const item = ref(props.item)
+
+const warrantyDisplay = (date: string) => {
+    return Date.parse(date) < Date.now() ? "Expired" : date.substring(0, 10)
+}
 
 </script>
 
@@ -10,18 +16,63 @@ defineEmits(['close'])
     <div class="modal-backdrop">
         <div class="modal">
             <header class="modal-header">
-                <slot name="header">
-                    {{ props.item.model.name }}
-                </slot>
+                Inventory details
                 <button type="button" class="btn-close" @click="$emit('close')">
                     x
                 </button>
             </header>
 
             <section class="modal-body">
-                <slot name="body">
-                    Description
-                </slot>
+                <div class="container">
+                    <div style="text-align: center;">
+                        <img class="thumbnail" :src="item.images[0]" />
+                        <p style="font-weight: bold;">{{ item.model.name }}</p>
+                    </div>
+                    <div class="outline">
+                        <table>
+                            <tr>
+                                <th>Brand</th>
+                                <td>{{ item.model.brand }}</td>
+                            </tr>
+                            <tr>
+                                <th>Display</th>
+                                <td>{{ item.model.display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Year</th>
+                                <td>{{ item.model.year }}</td>
+                            </tr>
+                            <tr>
+                                <th>Color</th>
+                                <td>{{ item.color }}</td>
+                            </tr>
+                            <tr>
+                                <th>OS Version</th>
+                                <td>{{ item.os_version }}</td>
+                            </tr>
+                            <tr>
+                                <th>Memory size</th>
+                                <td>{{ item.memory_size }}GB</td>
+                            </tr>
+                            <tr>
+                                <th>Warranty</th>
+                                <td>{{ warrantyDisplay(item.warranty_expiry) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Condition</th>
+                                <td>{{ item.condition }}</td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td>${{ item.price }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>{{ item.is_sold ? "Sold" : "In-stock" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <footer class="modal-footer">
@@ -47,7 +98,7 @@ defineEmits(['close'])
 }
 
 .modal {
-    width: 300px;
+    width: 450px;
     background: #FFFFFF;
     box-shadow: 2px 2px 5px 1px rgba(124, 124, 124, 0.3);
     overflow-x: auto;
@@ -88,7 +139,7 @@ defineEmits(['close'])
     padding: 10px;
     cursor: pointer;
     font-weight: bold;
-    color: #7EAAFF;
+    color: var(--primary-color);
     background: transparent;
 }
 
@@ -96,7 +147,40 @@ defineEmits(['close'])
     color: white;
     background: var(--primary-color);
     border: 1px solid var(--primary-color);
-    border-radius: 2px;
+    border-radius: 10px;
     padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+}
+
+.outline {
+    margin: 0px 10px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #d2d2d2;
+    display: flex;
+}
+
+.outline table,
+th,
+td {
+    text-align: start;
+    padding: 5px;
+}
+
+.outline table th {
+    font-weight: bold;
+}
+
+.thumbnail {
+    width: 100px;
+    height: 90px;
+    object-fit: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 </style>

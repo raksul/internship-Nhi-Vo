@@ -51,7 +51,8 @@ import Filter from "../components/Filter.vue";
   border: none;
   border-radius: 5px;
   margin-left: auto;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .add-btn:hover {
