@@ -7,9 +7,7 @@ import ProductModal from "./ProductModal.vue";
 const store = useInventoriesStore()
 const { fetchData } = useInventoriesStore()
 
-onMounted(() => {
-    fetchData()
-})
+fetchData()
 
 const labels = [
     "Image",

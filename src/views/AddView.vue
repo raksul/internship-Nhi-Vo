@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Form from "../components/Form.vue"
+import Autocomplete from "../components/Autocomplete.vue"
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import Form from "../components/Form.vue"
             Add new inventory
         </template>
     </Form>
+    <!-- <Autocomplete /> -->
 </template>
 
 <style scoped>

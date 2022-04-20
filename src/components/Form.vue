@@ -1,7 +1,18 @@
-<script setup lang="ts">import { ref } from 'vue';
+<script setup lang="ts">import { useBrandStore, type Brand } from '@/stores/brands';
+import { ref } from 'vue';
 import { useInventoriesStore } from "../stores/inventories";
+import Autocomplete from "./Autocomplete.vue";
 
-const store = useInventoriesStore()
+const { fetchData } = useBrandStore()
+
+const brandStore = useBrandStore()
+const inventoryStore = useInventoriesStore()
+
+const brands = ref([] as Array<Brand>)
+
+fetchData().then(() => brandStore.brands.forEach((brand) => {
+    brands.value.push(brand)
+}))
 
 const formData = {
     model: null,
@@ -21,10 +32,10 @@ const formData = {
         <h2 class="title">
             <slot name="title" class="title"></slot>
         </h2>
-        <form action="">
+        <form>
             <div class="input-group">
                 <span class="label">Brand</span>
-                <input type="text">
+                <Autocomplete :items="brands" @get-value="" />
             </div>
             <div class="input-group">
                 <span class="label">Model</span>
@@ -66,7 +77,7 @@ const formData = {
                     <button class="btn-delete">Delete</button>
                 </div>
 
-                <button v-if="!store.edit.status" class="btn-save">Add</button>
+                <button v-if="!inventoryStore.edit.status" class="btn-save">Add</button>
                 <button v-else class="btn-save">Save</button>
             </div>
         </form>

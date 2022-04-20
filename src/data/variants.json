@@ -1,0 +1,85 @@
+[
+    {
+        "id": 1,
+        "brand": "Apple",
+        "models": [
+            {
+                "id": 1,
+                "brand_id": 1,
+                "name": "iPhone 8",
+                "year": 2017,
+                "display": 4.7
+            },
+            {
+                "id": 4,
+                "brand_id": 1,
+                "name": "iPhone 11",
+                "year": 2019,
+                "display": 6.1
+            }
+        ],
+        "os_version": [
+            {
+                "id": 1,
+                "name": "iOS 13"
+            },
+            {
+                "id": 3,
+                "name": "iOS 14"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "brand": "Samsung",
+        "models": [
+            {
+                "id": 2,
+                "brand_id": 2,
+                "name": "Galaxy Note 9",
+                "year": 2020,
+                "display": 6.4
+            },
+            {
+                "id": 5,
+                "brand_id": 2,
+                "name": "Galaxy S22+",
+                "year": 2020,
+                "display": 6.2
+            }
+        ],
+        "os_version": [
+            {
+                "id": 2,
+                "name": "Android 11"
+            },
+            {
+                "id": 4,
+                "name": "Android 12"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "brand": "OnePlus",
+        "models": [
+            {
+                "id": 3,
+                "brand_id": 3,
+                "name": "OnePlus 6",
+                "year": 2018,
+                "display": 6.3
+            }
+        ], 
+        "os_version": [
+            {
+                "id": 2,
+                "name": "Android 11"
+            },
+            {
+                "id": 4,
+                "name": "Android 12"
+            }
+        ]
+    }
+]

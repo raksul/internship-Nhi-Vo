@@ -16,19 +16,19 @@
     "os_version": [
         {
             "id": 1,
-            "os_name": "iOS 13"
+            "name": "iOS 13"
         },
         {
             "id": 2,
-            "os_name": "Android 11"
+            "name": "Android 11"
         },
         {
             "id": 3,
-            "os_name": "iOS 14"
+            "name": "iOS 14"
         },
         {
             "id": 4,
-            "os_name": "Android 12"
+            "name": "Android 12"
         }
     ],
     "models": [
