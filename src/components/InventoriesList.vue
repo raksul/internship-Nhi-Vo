@@ -63,6 +63,7 @@ const closeModal = () => {
                 <td data-label="Mark as sold"><button :disabled="item.is_sold">Sold</button></td>
             </tr>
         </tbody>
+
         <ProductModal v-if="isShow" @close="closeModal" :item="currentItem" />
     </table>
 </template>

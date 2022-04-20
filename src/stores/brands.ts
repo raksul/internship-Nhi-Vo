@@ -13,6 +13,7 @@ export const useBrandStore = defineStore({
   state: () => ({
     brands: [] as Brand[],
     brand: "",
+    option: {} as Brand,
   }),
   actions: {
     async fetchData() {

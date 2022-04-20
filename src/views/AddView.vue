@@ -9,7 +9,6 @@ import Autocomplete from "../components/Autocomplete.vue"
             Add new inventory
         </template>
     </Form>
-    <!-- <Autocomplete /> -->
 </template>
 
 <style scoped>

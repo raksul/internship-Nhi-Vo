@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
-type Option = {
-    id: number,
-    name: string
-}
+import { useOptionStore, type Option } from '@/stores/option';
 
 const props = defineProps<{
     items: Array<Option>,
 }>()
 
-const selected = ref({});
+const store = useOptionStore()
 
 const isShow = ref(false)
 const keyword = ref("")
@@ -54,13 +50,14 @@ const onBlur = () => {
 const setResult = (result: Option) => {
     keyword.value = result.name
     isShow.value = false
+    store.option = result
 }
 
 const onEnter = () => {
     keyword.value = results.value[currentIdx.value].name
     isShow.value = false
     currentIdx.value = 0
-    selected.value = results.value[currentIdx.value]
+    store.option = results.value[currentIdx.value]
 }
 
 </script>
