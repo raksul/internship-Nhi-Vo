@@ -28,7 +28,7 @@ const warrantyDisplay = (date: string) => {
     return Date.parse(date) < Date.now() ? "Expired" : date.substring(0, 10)
 }
 
-const showModal = (item: Object) => {
+const showModal = (item: object) => {
     currentItem.value = item
     console.log(currentItem.value)
     isShow.value = true

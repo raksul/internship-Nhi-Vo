@@ -1,10 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-
-export type Brand = {
-  id: number;
-  name: string;
-};
+import type { Brand } from "./types";
 
 const BASE_URL = "http://localhost:3000/brands";
 

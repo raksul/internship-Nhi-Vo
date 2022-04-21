@@ -1,7 +1,12 @@
-<script setup lang="ts">import { useBrandStore, type Brand } from '@/stores/brands';
-import { ref } from 'vue';
+<script setup lang="ts">import { useBrandStore } from '@/stores/brands';
+import { reactive, ref, watch } from 'vue';
 import { useInventoriesStore } from "../stores/inventories";
 import Autocomplete from "./Autocomplete.vue";
+
+import { variants } from "@/data/variants.json"
+import type { Brand, Model, OS } from '@/stores/types';
+
+// type MemorySize = 64 | 128 | 256 | 512
 
 const { fetchData } = useBrandStore()
 
@@ -9,10 +14,49 @@ const brandStore = useBrandStore()
 const inventoryStore = useInventoriesStore()
 
 const brands = ref([] as Array<Brand>)
+const models = ref([] as Array<Model>)
+const os_versions = ref([] as Array<OS>)
+
+const brand = ref({} as Brand)
+const model = ref({} as Model)
+const os = ref({} as OS)
 
 fetchData().then(() => brandStore.brands.forEach((brand) => {
     brands.value.push(brand)
 }))
+
+const getModelsByBrand = (id: number) => {
+    let brand = variants.find(i => {
+        return i.id === id
+    })
+
+    if (brand) {
+        models.value = brand.models
+    }
+
+    console.log(models.value)
+}
+
+const getOSByBrand = (id: number) => {
+    let brand = variants.find(i => {
+        return i.id === id
+    })
+
+    if (brand) {
+        os_versions.value = brand.os_version
+    }
+
+    console.log(os_versions.value)
+}
+
+watch(
+    () => brand.value.id,
+    () => {
+        getModelsByBrand(brand.value.id)
+        getOSByBrand(brand.value.id)
+    },
+    { deep: true }
+)
 
 const formData = {
     model: null,
@@ -35,11 +79,11 @@ const formData = {
         <form>
             <div class="input-group">
                 <span class="label">Brand</span>
-                <Autocomplete :items="brands" @get-value="" />
+                <Autocomplete :items="brands" v-model="brand" />
             </div>
             <div class="input-group">
                 <span class="label">Model</span>
-                <input type="text">
+                <Autocomplete :items="models" v-model="model" />
             </div>
             <div class="input-group">
                 <span class="label">Memory Size</span>
@@ -47,7 +91,7 @@ const formData = {
             </div>
             <div class="input-group">
                 <span class="label">OS Version</span>
-                <input type="text">
+                <Autocomplete :items="os_versions" v-model="os" />
             </div>
             <div class="input-group">
                 <span class="label">Color</span>
@@ -72,7 +116,6 @@ const formData = {
 
             <div class="btn-container">
                 <div>
-
                     <router-link to="/"><button class="btn-back">Back</button></router-link>
                     <button class="btn-delete">Delete</button>
                 </div>

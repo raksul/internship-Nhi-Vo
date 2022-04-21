@@ -1,20 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useOptionStore, type Option } from '@/stores/option';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{
-    items: Array<Option>,
+    items: Array<any>,
+    modelValue: object
 }>()
 
-const store = useOptionStore()
+const emit = defineEmits<{
+    (e: 'update:modelValue', option: object): void
+}>()
 
 const isShow = ref(false)
 const keyword = ref("")
-const results = ref([] as Array<Option>)
+const results = ref([] as Array<any>)
 const currentIdx = ref(0)
 
+const selectedOption = ref({})
+
+watch(() => selectedOption.value, () => {
+    emit('update:modelValue', selectedOption.value)
+})
+
 const filterResults = () => {
-    results.value = props.items.filter((i: Option) => {
+    results.value = props.items.filter((i: any) => {
         return i.name.toLowerCase().includes(keyword.value.toLowerCase())
     })
 }
@@ -47,17 +55,17 @@ const onBlur = () => {
     isShow.value = false
 }
 
-const setResult = (result: Option) => {
+const setResult = (result: any) => {
     keyword.value = result.name
+    selectedOption.value = result
     isShow.value = false
-    store.option = result
 }
 
 const onEnter = () => {
     keyword.value = results.value[currentIdx.value].name
+    selectedOption.value = results.value[currentIdx.value]
     isShow.value = false
     currentIdx.value = 0
-    store.option = results.value[currentIdx.value]
 }
 
 </script>
@@ -65,7 +73,7 @@ const onEnter = () => {
 <template>
     <div class="autocomplete">
         <input type="text" v-model="keyword" @input="onChange" @keydown.down="onArrowDown" @keydown.up="onArrowUp"
-            @blur="onBlur" @keydown.enter.prevent="onEnter">
+            @blur="onBlur" @keydown.enter.prevent="onEnter" @focus="onChange">
         <div class="autocomplete-items" v-show="isShow">
             <div v-for="(result, index) in results" :key="index"
                 :class="{ 'autocomplete-active': index === currentIdx }" @mousedown="setResult(result)">
