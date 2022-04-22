@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import HomeView from "./views/HomeView.vue";
-import AddView from "./views/AddView.vue";
 </script>
 
 <template>
   <main>
     <div class="app-bar">
       <RouterLink to="/" class="branding">
-        2ndMobile
+        Store Management
         <font-awesome-icon :icon="['fas', 'mobile-screen-button']" />
       </RouterLink>
     </div>

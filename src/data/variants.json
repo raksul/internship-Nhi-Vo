@@ -6,14 +6,14 @@
             "models": [
                 {
                     "id": 1,
-                    "brand": 1,
+                    "brand": "Apple",
                     "name": "iPhone 8",
                     "year": 2017,
                     "display": 4.7
                 },
                 {
                     "id": 4,
-                    "brand": 1,
+                    "brand": "Apple",
                     "name": "iPhone 11",
                     "year": 2019,
                     "display": 6.1
@@ -22,10 +22,6 @@
             "os_version": [
                 {
                     "id": 1,
-                    "name": "iOS 12"
-                },
-                {
-                    "id": 2,
                     "name": "iOS 13"
                 },
                 {
@@ -40,14 +36,14 @@
             "models": [
                 {
                     "id": 2,
-                    "brand": 2,
+                    "brand": "Samsung",
                     "name": "Galaxy Note 9",
                     "year": 2020,
                     "display": 6.4
                 },
                 {
                     "id": 5,
-                    "brand": 2,
+                    "brand": "Samsung",
                     "name": "Galaxy S22+",
                     "year": 2020,
                     "display": 6.2
@@ -55,15 +51,11 @@
             ],
             "os_version": [
                 {
-                    "id": 1,
-                    "name": "Android 10"
-                },
-                {
                     "id": 2,
                     "name": "Android 11"
                 },
                 {
-                    "id": 3,
+                    "id": 4,
                     "name": "Android 12"
                 }
             ]
@@ -74,7 +66,7 @@
             "models": [
                 {
                     "id": 3,
-                    "brand": 3,
+                    "brand": "OnePlus",
                     "name": "OnePlus 6",
                     "year": 2018,
                     "display": 6.3
@@ -82,15 +74,11 @@
             ], 
             "os_version": [
                 {
-                    "id": 1,
-                    "name": "Android 10"
-                },
-                {
                     "id": 2,
                     "name": "Android 11"
                 },
                 {
-                    "id": 3,
+                    "id": 4,
                     "name": "Android 12"
                 }
             ]

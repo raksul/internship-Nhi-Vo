@@ -5,13 +5,13 @@ export type Brand = {
 
 export type Model = {
   id: number;
-  brand: number;
+  brand: string;
   name: string;
   year: number;
   display: number;
 };
 
-export type OS = {
+export type Option = {
   id: number;
   name: string;
 };

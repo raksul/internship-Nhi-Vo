@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import InventoriesList from "../components/InventoriesList.vue";
 import Filter from "../components/Filter.vue";
-
-
 </script>
 
 <template>
@@ -17,7 +15,6 @@ import Filter from "../components/Filter.vue";
       </button>
     </div>
     <InventoriesList />
-
   </div>
 </template>
 
@@ -44,7 +41,6 @@ import Filter from "../components/Filter.vue";
   font-size: 1rem;
   font-weight: bold;
 }
-
 
 .add-btn {
   background-color: var(--primary-color);
