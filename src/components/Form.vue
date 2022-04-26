@@ -22,7 +22,6 @@ const os_versions = ref([] as Array<Option>);
 const colors = ref([] as Array<Option>);
 
 const brand = ref({} as Brand);
-const model = ref({} as Model);
 const os = ref({} as Option);
 const color = ref({} as Option);
 const image = ref("");
@@ -33,7 +32,7 @@ const warranty_expiry = ref("");
 
 const formData = {
   id: null,
-  model: {},
+  model: ref({} as Model),
   os_version: "",
   memory_size: null,
   color: "",
@@ -118,7 +117,6 @@ const onFileChange = (e: Event) => {
 
 const addInventory = async () => {
   try {
-    formData.model = model.value;
     formData.os_version = os.value.name;
     formData.color = color.value.name;
     formData.images.push(image.value);
@@ -149,7 +147,7 @@ const addInventory = async () => {
       </div>
       <div class="input-group">
         <span class="label">Model</span>
-        <Autocomplete :items="models" v-model="model" />
+        <Autocomplete :items="models" v-model="formData.model" />
       </div>
       <div class="input-group">
         <span class="label">Memory Size</span>

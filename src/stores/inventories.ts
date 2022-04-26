@@ -11,7 +11,6 @@ export const useInventoriesStore = defineStore({
     inventory: {} as Inventory,
     edit: { status: false, id: null },
     filter: "in-stock",
-    search: "",
   }),
   getters: {
     getFiltered(state) {
@@ -36,6 +35,9 @@ export const useInventoriesStore = defineStore({
         .get(`${BASE_URL}/${id}`)
         .then((res) => (this.inventory = res.data))
         .catch((err) => console.log(err));
+    },
+    markAsSold(id: number) {
+      this.inventories[id].is_sold = true;
     },
   },
 });

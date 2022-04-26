@@ -4,6 +4,7 @@ import { useInventoriesStore } from "@/stores/inventories";
 import ProductModal from "./ProductModal.vue";
 import Filter from "./Filter.vue";
 import { computed } from "@vue/reactivity";
+import axios from "axios";
 
 const store = useInventoriesStore();
 const { fetchData } = useInventoriesStore();
@@ -42,9 +43,23 @@ const closeModal = () => {
 const state: any = reactive({
   search: "",
   filteredResults: computed(() => store.getFiltered?.filter((i) => {
-    return i.model.name.concat(i.model.brand).toLowerCase().includes(state.search)
+    return i.model.name.concat(i.model.brand).toLowerCase().includes(state.search.toLowerCase())
   }))
 });
+
+const markSold = (id: number) => {
+  if (confirm("Mark this item as sold?")) {
+    axios.patch(`http://localhost:3000/inventories/${id}`, { "is_sold": true })
+      .then(() => {
+        let index = store.inventories.findIndex(
+          (item) => item.id === id
+        );
+        store.markAsSold(index)
+      })
+      .catch(err => console.log(err))
+  }
+}
+
 </script>
 
 <template>
@@ -80,7 +95,7 @@ const state: any = reactive({
         <td data-label="Price">${{ item.price }}</td>
         <td data-label="Status">{{ item.is_sold ? "Sold" : "In-stock" }}</td>
         <td data-label="Mark as sold">
-          <button :disabled="item.is_sold">Sold</button>
+          <button :disabled="item.is_sold" class="sold-btn" @click.prevent.stop="markSold(item.id)">Sold</button>
         </td>
       </tr>
     </tbody>
@@ -196,5 +211,24 @@ table {
   object-fit: cover;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+.sold-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.sold-btn:hover {
+  background-color: #91b2ff;
+  cursor: pointer;
+}
+
+.sold-btn:disabled {
+  background-color: #ccc;
 }
 </style>

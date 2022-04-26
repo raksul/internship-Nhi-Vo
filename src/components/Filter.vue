@@ -1,30 +1,30 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false
+}
+</script>
+
 <script setup lang="ts">
 import { useInventoriesStore } from '@/stores/inventories';
 import { ref, watch } from 'vue';
 
 const store = useInventoriesStore()
 const selected = ref("in-stock" as string)
-const emit = defineEmits<{
-  (e: "update:modelValue", query: string): void;
-}>();
-const query = ref("")
+const emit = defineEmits(['input', 'update:modelValue'])
 
 watch(() => selected.value, () => {
   store.filter = selected.value
 })
 
-watch(
-  () => query.value,
-  () => {
-    emit("update:modelValue", query.value);
-  }
-);
+const query = (e: Event) => {
+  emit('update:modelValue', (e.target as HTMLInputElement).value)
+};
 
 </script>
 
 <template>
-  <input type="text" name="" id="" class="filter" placeholder="Search..." v-model="query" />
-  <div class="select">
+  <input type="text" class="filter" placeholder="Search..." @input="query" />
+  <div class=" select">
     <select class="custom-select" v-model="selected">
       <option value="in-stock">In-stock items</option>
       <option value="all">All</option>
