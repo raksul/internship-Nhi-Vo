@@ -32,7 +32,7 @@ const warranty_expiry = ref("");
 
 const formData = {
   id: null,
-  model: ref({} as Model),
+  model: {} as Model,
   os_version: "",
   memory_size: null,
   color: "",
