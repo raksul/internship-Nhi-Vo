@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { useInventoriesStore } from "@/stores/inventories";
 import ProductModal from "./ProductModal.vue";
+import Filter from "./Filter.vue";
+import { computed } from "@vue/reactivity";
 
 const store = useInventoriesStore();
 const { fetchData } = useInventoriesStore();
@@ -36,9 +38,25 @@ const showModal = (item: object) => {
 const closeModal = () => {
   isShow.value = false;
 };
+
+const state: any = reactive({
+  search: "",
+  filteredResults: computed(() => store.getFiltered?.filter((i) => {
+    return i.model.name.concat(i.model.brand).toLowerCase().includes(state.search)
+  }))
+});
 </script>
 
 <template>
+  <div class="row">
+    <Filter v-model="state.search" />
+    <button class="add-btn">
+      <router-link class="button-link" to="/add">
+        <font-awesome-icon :icon="['fas', 'plus']" />
+        Add new inventory
+      </router-link>
+    </button>
+  </div>
   <table class="table">
     <thead>
       <tr>
@@ -48,7 +66,7 @@ const closeModal = () => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in store.inventories" :key="item.id" @click="showModal(item)">
+      <tr v-for="item in state.filteredResults" :key="item.id" @click="showModal(item)">
         <td data-label="Image">
           <img class="thumbnail" :src="item.images[0]" alt="" />
         </td>
@@ -72,6 +90,38 @@ const closeModal = () => {
 </template>
 
 <style scoped>
+.row {
+  width: 100%;
+  display: flex;
+}
+
+/* temporary */
+@media (max-width: 600px) {
+  .row {
+    display: none;
+  }
+}
+
+.add-btn .button-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.add-btn {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #91b2ff;
+}
+
 table {
   border: 1px solid #ccc;
   border-collapse: collapse;
@@ -118,7 +168,6 @@ table {
   }
 
   .table tr {
-    margin-bottom: 15px;
     border: 1px solid #ccc;
   }
 

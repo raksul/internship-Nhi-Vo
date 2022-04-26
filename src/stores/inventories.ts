@@ -1,7 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import type { Inventory } from "./types";
-import Fuse from "fuse.js";
 
 const BASE_URL = "http://localhost:3000/inventories";
 
@@ -11,10 +10,19 @@ export const useInventoriesStore = defineStore({
     inventories: [] as Inventory[],
     inventory: {} as Inventory,
     edit: { status: false, id: null },
-    filters: [],
+    filter: "in-stock",
+    search: "",
   }),
   getters: {
-    getFilteredInventories(state) {},
+    getFiltered(state) {
+      if (state.filter === "in-stock") {
+        return state.inventories.filter((i) => {
+          return i.is_sold === false;
+        });
+      } else if (state.filter === "all") {
+        return state.inventories;
+      }
+    },
   },
   actions: {
     async fetchData() {

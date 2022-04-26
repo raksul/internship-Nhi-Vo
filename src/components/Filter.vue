@@ -1,9 +1,33 @@
+<script setup lang="ts">
+import { useInventoriesStore } from '@/stores/inventories';
+import { ref, watch } from 'vue';
+
+const store = useInventoriesStore()
+const selected = ref("in-stock" as string)
+const emit = defineEmits<{
+  (e: "update:modelValue", query: string): void;
+}>();
+const query = ref("")
+
+watch(() => selected.value, () => {
+  store.filter = selected.value
+})
+
+watch(
+  () => query.value,
+  () => {
+    emit("update:modelValue", query.value);
+  }
+);
+
+</script>
+
 <template>
-  <input type="text" name="" id="" class="filter" placeholder="Search..." />
+  <input type="text" name="" id="" class="filter" placeholder="Search..." v-model="query" />
   <div class="select">
-    <select class="custom-select">
-      <option selected>In-stock items</option>
-      <option>All</option>
+    <select class="custom-select" v-model="selected">
+      <option value="in-stock">In-stock items</option>
+      <option value="all">All</option>
     </select>
     <svg>
       <use xlink:href="#select-arrow-down"></use>
@@ -20,7 +44,7 @@
 .filter {
   border: 1px solid #d2d2d2;
   border-radius: 5px;
-  width: 250px;
+  width: 300px;
   height: 2.5em;
   margin-bottom: 15px;
   padding: 10px;

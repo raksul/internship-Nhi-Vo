@@ -212,7 +212,7 @@
       "color": "Red",
       "condition": "Like new",
       "price": 999,
-      "is_sold": false,
+      "is_sold": true,
       "warranty_expiry": "2021-05-03",
       "images": [
         "https://i.imgur.com/lv96VRF.jpg"

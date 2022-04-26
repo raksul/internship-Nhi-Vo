@@ -241,7 +241,6 @@ const addInventory = async () => {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 10px;
 }
 
 .wrapper form {
