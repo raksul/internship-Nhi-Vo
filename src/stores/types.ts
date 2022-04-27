@@ -5,7 +5,7 @@ export type Brand = {
 
 export type Model = {
   id: number;
-  brand: string;
+  brand: Brand;
   name: string;
   year: number;
   display: number;
@@ -19,9 +19,9 @@ export type Option = {
 export type Inventory = {
   id: number;
   model: Model;
-  os_version: string;
+  os_version: Option;
   memory_size: number;
-  color: string;
+  color: Option;
   condition: string;
   price: number;
   is_sold: boolean;

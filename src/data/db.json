@@ -60,35 +60,50 @@
   "models": [
     {
       "id": 1,
-      "brand": "Apple",
+      "brand": {
+        "id": 1,
+        "name": "Apple"
+      },
       "name": "iPhone 8",
       "year": 2017,
       "display": 4.7
     },
     {
       "id": 2,
-      "brand": "Samsung",
+      "brand": {
+        "id": 2,
+        "name": "Samsung"
+      },
       "name": "Galaxy Note 9",
       "year": 2020,
       "display": 6.4
     },
     {
       "id": 3,
-      "brand": "OnePlus",
+      "brand": {
+        "id": 3,
+        "name": "OnePlus"
+      },
       "name": "OnePlus 6",
       "year": 2018,
       "display": 6.3
     },
     {
       "id": 4,
-      "brand": "Apple",
+      "brand": {
+        "id": 1,
+        "name": "Apple"
+      },
       "name": "iPhone 11",
       "year": 2019,
       "display": 6.1
     },
     {
       "id": 5,
-      "brand": "Samsung",
+      "brand": {
+        "id": 2,
+        "name": "Samsung"
+      },
       "name": "Galaxy S22+",
       "year": 2020,
       "display": 6.2
@@ -99,14 +114,23 @@
       "id": 1,
       "model": {
         "id": 1,
-        "brand": "Apple",
+        "brand": {
+          "id": 1,
+          "name": "Apple"
+        },
         "name": "iPhone 8",
         "year": 2017,
         "display": 4.7
       },
-      "os_version": "iOS 13",
+      "os_version": {
+        "id": 1,
+        "name": "iOS 13"
+      },
       "memory_size": 64,
-      "color": "Black",
+      "color": {
+        "id": 1,
+        "name": "Black"
+      },
       "condition": "Well used",
       "price": 199,
       "is_sold": false,
@@ -119,14 +143,23 @@
       "id": 2,
       "model": {
         "id": 2,
-        "brand": "Samsung",
+        "brand": {
+          "id": 2,
+          "name": "Samsung"
+        },
         "name": "Galaxy Note 9",
         "year": 2020,
         "display": 6.4
       },
-      "os_version": "Android 11",
+      "os_version": {
+        "id": 2,
+        "name": "Android 11"
+      },
       "memory_size": 128,
-      "color": "White",
+      "color": {
+        "id": 3,
+        "name": "White"
+      },
       "condition": "Well used",
       "price": 299,
       "is_sold": true,
@@ -140,14 +173,23 @@
       "id": 3,
       "model": {
         "id": 3,
-        "brand": "OnePlus",
+        "brand": {
+          "id": 3,
+          "name": "OnePlus"
+        },
         "name": "OnePlus 6",
         "year": 2018,
         "display": 6.3
       },
-      "os_version": "Android 11",
+      "os_version": {
+        "id": 2,
+        "name": "Android 11"
+      },
       "memory_size": 64,
-      "color": "Black",
+      "color": {
+        "id": 1,
+        "name": "Black"
+      },
       "condition": "Heavily used",
       "price": 150,
       "is_sold": false,
@@ -160,14 +202,23 @@
       "id": 4,
       "model": {
         "id": 4,
-        "brand": "Apple",
+        "brand": {
+          "id": 1,
+          "name": "Apple"
+        },
         "name": "iPhone 11",
         "year": 2019,
         "display": 6.1
       },
-      "os_version": "iOS 14",
+      "os_version": {
+        "id": 3,
+        "name": "iOS 14"
+      },
       "memory_size": 64,
-      "color": "Purple",
+      "color": {
+        "id": 4,
+        "name": "Purple"
+      },
       "condition": "Like new",
       "created_at": "2020-01-19T11:37:23Z",
       "sold_at": "2020-08-05T17:16:40Z",
@@ -182,14 +233,23 @@
       "id": 5,
       "model": {
         "id": 5,
-        "brand": "Samsung",
+        "brand": {
+          "id": 2,
+          "name": "Samsung"
+        },
         "name": "Galaxy S22+",
         "year": 2020,
         "display": 6.2
       },
-      "os_version": "Android 12",
+      "os_version": {
+        "id": 4,
+        "name": "Android 12"
+      },
       "memory_size": 128,
-      "color": "Blue",
+      "color": {
+        "id": 2,
+        "name": "Blue"
+      },
       "condition": "Well used",
       "price": 528,
       "is_sold": false,
@@ -202,20 +262,29 @@
       "id": 6,
       "model": {
         "id": 4,
-        "brand": "Apple",
+        "brand": {
+          "id": 1,
+          "name": "Apple"
+        },
         "name": "iPhone 11",
         "year": 2019,
         "display": 6.1
       },
-      "os_version": "iOS 14",
-      "memory_size": 128,
-      "color": "Red",
-      "condition": "Like new",
+      "os_version": {
+        "id": 3,
+        "name": "iOS 14"
+      },
+      "memory_size": 256,
+      "color": {
+        "id": 5,
+        "name": "Red"
+      },
+      "condition": "Well used",
       "price": 999,
       "is_sold": true,
-      "warranty_expiry": "2021-05-03",
+      "warranty_expiry": "2022-12-31",
       "images": [
-        "https://i.imgur.com/lv96VRF.jpg"
+        "https://i.imgur.com/ieNC1Ot.jpg"
       ]
     }
   ],

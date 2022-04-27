@@ -8,12 +8,14 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faPlus,
   faMobileScreenButton,
+  faPen,
+  faTag,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const app = createApp(App);
 
-library.add({ faPlus, faMobileScreenButton });
+library.add({ faPlus, faMobileScreenButton, faPen, faTag });
 
 app.use(createPinia());
 app.use(router);

@@ -5,6 +5,7 @@ import ProductModal from "./ProductModal.vue";
 import Filter from "./Filter.vue";
 import { computed } from "@vue/reactivity";
 import axios from "axios";
+import type { Inventory } from "@/stores/types";
 
 const store = useInventoriesStore();
 const { fetchData } = useInventoriesStore();
@@ -24,15 +25,15 @@ const labels = [
 ];
 
 const isShow = ref(false);
-const currentItem: any = ref(null);
+const currentItem = ref({} as Inventory);
 
 const warrantyDisplay = (date: string) => {
   return Date.parse(date) < Date.now() ? "Expired" : date;
 };
 
-const showModal = (item: object) => {
+const showModal = (item: Inventory) => {
   currentItem.value = item;
-  console.log(currentItem.value);
+  // console.log(currentItem.value);
   isShow.value = true;
 };
 
@@ -43,7 +44,7 @@ const closeModal = () => {
 const state: any = reactive({
   search: "",
   filteredResults: computed(() => store.getFiltered?.filter((i) => {
-    return i.model.name.concat(i.model.brand).toLowerCase().includes(state.search.toLowerCase())
+    return i.model.brand.name.concat(" ", i.model.name).toLowerCase().includes(state.search.toLowerCase())
   }))
 });
 
@@ -85,7 +86,7 @@ const markSold = (id: number) => {
         <td data-label="Image">
           <img class="thumbnail" :src="item.images[0]" alt="" />
         </td>
-        <td data-label="Brand">{{ item.model.brand }}</td>
+        <td data-label="Brand">{{ item.model.brand.name }}</td>
         <td data-label="Model">{{ item.model.name }}</td>
         <td data-label="Condition">{{ item.condition }}</td>
         <td data-label="Memory Size">{{ item.memory_size }}GB</td>
@@ -95,7 +96,9 @@ const markSold = (id: number) => {
         <td data-label="Price">${{ item.price }}</td>
         <td data-label="Status">{{ item.is_sold ? "Sold" : "In-stock" }}</td>
         <td data-label="Mark as sold">
-          <button :disabled="item.is_sold" class="sold-btn" @click.prevent.stop="markSold(item.id)">Sold</button>
+          <button :disabled="item.is_sold" class="sold-btn" @click.prevent.stop="markSold(item.id)">
+            <font-awesome-icon :icon="['fas', 'tag']" /> Sold
+          </button>
         </td>
       </tr>
     </tbody>
@@ -186,10 +189,13 @@ table {
     border: 1px solid #ccc;
   }
 
+  .table tr:not(:first-child) {
+    border-top: none;
+  }
+
   .table td {
     text-align: start;
     padding-left: 50%;
-    text-align: start;
     position: relative;
   }
 
@@ -220,7 +226,7 @@ table {
   font-weight: bold;
   border: none;
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
 }
 
 .sold-btn:hover {

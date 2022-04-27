@@ -26,12 +26,20 @@ const warrantyDisplay = (date: string) => {
           <div style="text-align: center">
             <img class="thumbnail" :src="item.images[0]" />
             <p style="font-weight: bold">{{ item.model.name }}</p>
+
+            <button class="btn-edit" v-show="!item.is_sold">
+              <router-link style="text-decoration: none; color: #000" :to="{ name: 'edit', params: { id: item.id } }">
+                <font-awesome-icon :icon="['fas', 'pen']" />
+                Edit
+              </router-link>
+            </button>
           </div>
           <div class="outline">
+
             <table>
               <tr>
                 <th>Brand</th>
-                <td>{{ item.model.brand }}</td>
+                <td>{{ item.model.brand.name }}</td>
               </tr>
               <tr>
                 <th>Display</th>
@@ -43,11 +51,11 @@ const warrantyDisplay = (date: string) => {
               </tr>
               <tr>
                 <th>Color</th>
-                <td>{{ item.color }}</td>
+                <td>{{ item.color.name }}</td>
               </tr>
               <tr>
                 <th>OS Version</th>
-                <td>{{ item.os_version }}</td>
+                <td>{{ item.os_version.name }}</td>
               </tr>
               <tr>
                 <th>Memory size</th>
@@ -162,6 +170,7 @@ const warrantyDisplay = (date: string) => {
   width: 100%;
   border: 1px solid #d2d2d2;
   display: flex;
+  border-radius: 10px
 }
 
 .outline table,
@@ -181,5 +190,14 @@ td {
   object-fit: cover;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+.btn-edit {
+  margin-top: 10px;
+  width: 100%;
+  background-color: rgb(205, 205, 205);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
 }
 </style>

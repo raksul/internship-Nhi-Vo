@@ -6,14 +6,20 @@
             "models": [
                 {
                     "id": 1,
-                    "brand": "Apple",
+                    "brand": {
+                        "id": 1,
+                        "name": "Apple"
+                    },
                     "name": "iPhone 8",
                     "year": 2017,
                     "display": 4.7
                 },
                 {
                     "id": 4,
-                    "brand": "Apple",
+                    "brand": {
+                        "id": 1,
+                        "name": "Apple"
+                    },
                     "name": "iPhone 11",
                     "year": 2019,
                     "display": 6.1
@@ -36,14 +42,20 @@
             "models": [
                 {
                     "id": 2,
-                    "brand": "Samsung",
+                    "brand": {
+                        "id": 2,
+                        "name": "Samsung"
+                    },
                     "name": "Galaxy Note 9",
                     "year": 2020,
                     "display": 6.4
                 },
                 {
                     "id": 5,
-                    "brand": "Samsung",
+                    "brand": {
+                        "id": 2,
+                        "name": "Samsung"
+                    },
                     "name": "Galaxy S22+",
                     "year": 2020,
                     "display": 6.2
@@ -66,12 +78,15 @@
             "models": [
                 {
                     "id": 3,
-                    "brand": "OnePlus",
+                    "brand": {
+                        "id": 3,
+                        "name": "OnePlus"
+                    },
                     "name": "OnePlus 6",
                     "year": 2018,
                     "display": 6.3
                 }
-            ], 
+            ],
             "os_version": [
                 {
                     "id": 2,

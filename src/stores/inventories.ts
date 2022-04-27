@@ -36,6 +36,7 @@ export const useInventoriesStore = defineStore({
         .then((res) => (this.inventory = res.data))
         .catch((err) => console.log(err));
     },
+    async updateInventory(id: number) {},
     markAsSold(id: number) {
       this.inventories[id].is_sold = true;
     },
