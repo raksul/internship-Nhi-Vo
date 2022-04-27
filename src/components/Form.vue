@@ -163,11 +163,11 @@ const updateInventory = async (id: string) => {
     <form @submit.prevent>
       <div class="input-group">
         <span class="label">Brand</span>
-        <Autocomplete :items="brands" v-model="brand" />
+        <Autocomplete :items="brands" v-model="brand" :value="formData.model.brand.name" />
       </div>
       <div class="input-group">
         <span class="label">Model</span>
-        <Autocomplete :items="models" v-model="formData.model" />
+        <Autocomplete :items="models" v-model="formData.model" :value="formData.model.name" />
       </div>
       <div class="input-group">
         <span class="label">Memory Size</span>
@@ -190,11 +190,11 @@ const updateInventory = async (id: string) => {
       </div>
       <div class="input-group">
         <span class="label">OS Version</span>
-        <Autocomplete :items="os_versions" v-model="formData.os_version" />
+        <Autocomplete :items="os_versions" v-model="formData.os_version" :value="formData.os_version.name" />
       </div>
       <div class="input-group">
         <span class="label">Color</span>
-        <Autocomplete :items="colors" v-model="formData.color" />
+        <Autocomplete :items="colors" v-model="formData.color" :value="formData.color.name" />
       </div>
       <div class="input-group">
         <span class="label">Price</span>
