@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
   <main>
     <div class="app-bar">
-      <RouterLink to="/" class="branding">
+      <a href="http://localhost:3001" class="branding">
         Store Management
         <font-awesome-icon :icon="['fas', 'mobile-screen-button']" />
-      </RouterLink>
+      </a>
     </div>
     <RouterView />
   </main>

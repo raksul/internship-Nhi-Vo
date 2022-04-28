@@ -9,6 +9,8 @@ import type { Brand, Model, Option } from "@/stores/types";
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 
+const BASE_URL = "http://localhost:3000/inventories";
+
 const memorySizes = [64, 128, 256, 512];
 const conditions = ["Like new", "Well used", "Heavily used"];
 
@@ -25,8 +27,8 @@ const colors = ref([] as Array<Option>);
 const brand = ref({} as Brand);
 const image = ref("");
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
 let formData = {
   id: null,
@@ -39,8 +41,7 @@ let formData = {
   is_sold: false,
   warranty_expiry: "",
   images: [] as Array<string>,
-}
-
+};
 
 const getModelsByBrand = (id: number) => {
   let brand = variants.find((i) => {
@@ -66,7 +67,6 @@ const getOSByBrand = (id: number) => {
   // console.log(os_versions.value)
 };
 
-
 watch(
   () => brand.value.id,
   () => {
@@ -76,8 +76,7 @@ watch(
 );
 
 if (route.params.id) {
-
-  let i_id = parseInt(route.params.id[0])
+  let i_id = parseInt(route.params.id[0]);
 
   inventoryStore.edit.status = true;
 
@@ -86,7 +85,7 @@ if (route.params.id) {
   });
 
   if (inventory) {
-    brand.value = inventory.model.brand
+    brand.value = inventory.model.brand;
     formData = JSON.parse(JSON.stringify(inventory));
   }
 }
@@ -114,7 +113,7 @@ const config = {
 };
 
 const onFileChange = (e: Event) => {
-  let file = (e.target as HTMLInputElement).files![0];
+  let file = (e.target as HTMLInputElement).files?.[0];
 
   if (file) {
     state.url.pop();
@@ -130,33 +129,47 @@ const onFileChange = (e: Event) => {
   }
 };
 
-const addInventory = async () => {
+const addInventory = () => {
   formData.images.push(image.value);
 
-  await axios
-    .post(`http://localhost:3000/inventories`, formData)
+  axios
+    .post(`${BASE_URL}`, formData)
     .then((res) => {
       if (res.status === 201) {
-        alert("Inventory added successfully")
-        router.push("/")
+        alert("Inventory added successfully");
+        router.push("/");
       }
     })
     .catch((err) => console.log(err));
-
 };
 
-const updateInventory = async (id: string) => {
-  await axios.put(`http://localhost:3000/inventories/${id}`, formData)
-    .then(res => {
+const updateInventory = (id: string) => {
+  axios
+    .put(`${BASE_URL}/${id}`, formData)
+    .then((res) => {
       if (res.status === 200) {
-        alert("Update successfully")
-        inventoryStore.edit.status = false
-        router.push("/")
+        alert("Update successfully");
+        inventoryStore.edit.status = false;
+        router.push("/");
       }
     })
-    .catch(err => console.log(err))
-}
+    .catch((err) => console.log(err));
+};
 
+const deleteInventory = (id: string) => {
+  if (
+    confirm(
+      "Are you sure you want to delete this item? This action cannot be undone"
+    )
+  ) {
+    axios.delete(`${BASE_URL}/${id}`).then((res) => {
+      if (res.status === 200) {
+        alert("Item deleted");
+        router.push("/");
+      }
+    });
+  }
+};
 </script>
 
 <template>
@@ -167,19 +180,35 @@ const updateInventory = async (id: string) => {
     <form @submit.prevent>
       <div class="input-group">
         <span class="label">Brand</span>
-        <Autocomplete :items="brands" v-model="brand" :value="brand.name ? brand.name : null" />
+        <Autocomplete
+          :items="brands"
+          v-model="brand"
+          :value="brand.name ? brand.name : null"
+        />
       </div>
       <div class="input-group">
         <span class="label">Model</span>
-        <Autocomplete :items="models" v-model="formData.model"
-          :value="formData.model.name ? formData.model.name : null" />
+        <Autocomplete
+          :items="models"
+          v-model="formData.model"
+          :value="formData.model.name ? formData.model.name : null"
+        />
       </div>
       <div class="input-group">
         <span class="label">Memory Size</span>
         <div class="select">
-          <select name="memory_sizes" id="memory_sizes" class="custom-select" v-model="formData.memory_size">
+          <select
+            name="memory_sizes"
+            id="memory_sizes"
+            class="custom-select"
+            v-model="formData.memory_size"
+          >
             <option disabled selected>--- Choose option ---</option>
-            <option v-for="(memory, index) in memorySizes" :value="memory" :key="index">
+            <option
+              v-for="(memory, index) in memorySizes"
+              :value="memory"
+              :key="index"
+            >
               {{ memory }}GB
             </option>
           </select>
@@ -195,13 +224,19 @@ const updateInventory = async (id: string) => {
       </div>
       <div class="input-group">
         <span class="label">OS Version</span>
-        <Autocomplete :items="os_versions" v-model="formData.os_version"
-          :value="formData.os_version.name ? formData.os_version.name : null" />
+        <Autocomplete
+          :items="os_versions"
+          v-model="formData.os_version"
+          :value="formData.os_version.name ? formData.os_version.name : null"
+        />
       </div>
       <div class="input-group">
         <span class="label">Color</span>
-        <Autocomplete :items="colors" v-model="formData.color"
-          :value="formData.color.name ? formData.color.name : null" />
+        <Autocomplete
+          :items="colors"
+          v-model="formData.color"
+          :value="formData.color.name ? formData.color.name : null"
+        />
       </div>
       <div class="input-group">
         <span class="label">Price</span>
@@ -214,9 +249,18 @@ const updateInventory = async (id: string) => {
       <div class="input-group">
         <span class="label">Condition</span>
         <div class="select">
-          <select name="conditions" id="conditions" class="custom-select" v-model="formData.condition">
+          <select
+            name="conditions"
+            id="conditions"
+            class="custom-select"
+            v-model="formData.condition"
+          >
             <option disabled selected>--- Choose option ---</option>
-            <option v-for="(condition, index) in conditions" :value="condition" :key="index">
+            <option
+              v-for="(condition, index) in conditions"
+              :value="condition"
+              :key="index"
+            >
               {{ condition }}
             </option>
           </select>
@@ -239,14 +283,32 @@ const updateInventory = async (id: string) => {
       </div>
       <div class="btn-container">
         <div>
-          <router-link to="/"><button class="btn-back">Back</button></router-link>
-          <button v-if="inventoryStore.edit.status" class="btn-delete">
+          <router-link to="/"
+            ><button class="btn-back">Back</button></router-link
+          >
+          <button
+            v-if="inventoryStore.edit.status"
+            class="btn-delete"
+            @click="deleteInventory($route.params.id)"
+          >
             Delete
           </button>
         </div>
 
-        <button v-if="!inventoryStore.edit.status" class="btn-save" @click="addInventory">Add</button>
-        <button v-else class="btn-save" @click="updateInventory($route.params.id)">Save</button>
+        <button
+          v-if="!inventoryStore.edit.status"
+          class="btn-save"
+          @click="addInventory"
+        >
+          Add
+        </button>
+        <button
+          v-else
+          class="btn-save"
+          @click="updateInventory($route.params.id)"
+        >
+          Save
+        </button>
       </div>
     </form>
   </div>

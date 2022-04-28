@@ -28,3 +28,5 @@ export type Inventory = {
   warranty_expiry: string;
   images: Array<string>;
 };
+
+export type T = Brand | Model | Option;

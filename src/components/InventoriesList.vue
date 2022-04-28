@@ -41,26 +41,30 @@ const closeModal = () => {
   isShow.value = false;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const state: any = reactive({
   search: "",
-  filteredResults: computed(() => store.getFiltered?.filter((i) => {
-    return i.model.brand.name.concat(" ", i.model.name).toLowerCase().includes(state.search.toLowerCase())
-  }))
+  filteredResults: computed(() =>
+    store.getFiltered?.filter((i) => {
+      return i.model.brand.name
+        .concat(" ", i.model.name)
+        .toLowerCase()
+        .includes(state.search.toLowerCase());
+    })
+  ),
 });
 
 const markSold = (id: number) => {
   if (confirm("Mark this item as sold?")) {
-    axios.patch(`http://localhost:3000/inventories/${id}`, { "is_sold": true })
+    axios
+      .patch(`http://localhost:3000/inventories/${id}`, { is_sold: true })
       .then(() => {
-        let index = store.inventories.findIndex(
-          (item) => item.id === id
-        );
-        store.markAsSold(index)
+        let index = store.inventories.findIndex((item) => item.id === id);
+        store.markAsSold(index);
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
-}
-
+};
 </script>
 
 <template>
@@ -82,7 +86,11 @@ const markSold = (id: number) => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in state.filteredResults" :key="item.id" @click="showModal(item)">
+      <tr
+        v-for="item in state.filteredResults"
+        :key="item.id"
+        @click="showModal(item)"
+      >
         <td data-label="Image">
           <img class="thumbnail" :src="item.images[0]" alt="" />
         </td>
@@ -96,7 +104,11 @@ const markSold = (id: number) => {
         <td data-label="Price">${{ item.price }}</td>
         <td data-label="Status">{{ item.is_sold ? "Sold" : "In-stock" }}</td>
         <td data-label="Mark as sold">
-          <button :disabled="item.is_sold" class="sold-btn" @click.prevent.stop="markSold(item.id)">
+          <button
+            :disabled="item.is_sold"
+            class="sold-btn"
+            @click.prevent.stop="markSold(item.id)"
+          >
             <font-awesome-icon :icon="['fas', 'tag']" /> Sold
           </button>
         </td>

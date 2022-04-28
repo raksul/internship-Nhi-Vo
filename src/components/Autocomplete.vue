@@ -1,32 +1,29 @@
 <script setup lang="ts">
-import type { Brand, Model, Option } from "@/stores/types";
+import type { T } from "@/stores/types";
+import { computed } from "@vue/reactivity";
 import { ref, watch } from "vue";
-
-type T = Brand | Model | Option
 
 const props = defineProps<{
   items: Array<T>;
-  modelValue: object;
+  modelValue: T;
   value: string | null;
 }>();
 
 const emit = defineEmits<{
-  (e: "update:modelValue", option: object): void;
+  (e: "update:modelValue", option: T): void;
 }>();
 
 const isShow = ref(false);
 const keyword = ref();
 
-props.value ? keyword.value = props.value : ""
-
 const results = ref([] as Array<T>);
 const currentIdx = ref(0);
 
-const selectedOption = ref({});
+const selectedOption = ref({} as T);
 
-if (props.value) {
-  selectedOption.value = props.modelValue
-}
+const computedValue = computed(() => props.value);
+
+props.value ? (keyword.value = computedValue.value) : (keyword.value = "");
 
 watch(
   () => selectedOption.value,
@@ -36,6 +33,10 @@ watch(
 );
 
 const filterResults = () => {
+  if (props.value) {
+    selectedOption.value = props.modelValue;
+  }
+
   results.value = props.items.filter((i: T) => {
     return i.name.toLowerCase().includes(keyword.value?.toLowerCase());
   });
@@ -85,11 +86,23 @@ const onEnter = () => {
 
 <template>
   <div class="autocomplete">
-    <input type="text" v-model="keyword" @input="onChange" @keydown.down="onArrowDown" @keydown.up="onArrowUp"
-      @blur="onBlur" @keydown.enter.prevent="onEnter" @focus="onChange" />
+    <input
+      type="text"
+      v-model="keyword"
+      @input="onChange"
+      @keydown.down="onArrowDown"
+      @keydown.up="onArrowUp"
+      @blur="onBlur"
+      @keydown.enter.prevent="onEnter"
+      @focus="onChange"
+    />
     <div class="autocomplete-items" v-show="isShow">
-      <div v-for="(result, index) in results" :key="index" :class="{ 'autocomplete-active': index === currentIdx }"
-        @mousedown="setResult(result)">
+      <div
+        v-for="(result, index) in results"
+        :key="index"
+        :class="{ 'autocomplete-active': index === currentIdx }"
+        @mousedown="setResult(result)"
+      >
         {{ result.name }}
       </div>
     </div>
