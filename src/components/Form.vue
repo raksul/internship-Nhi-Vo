@@ -41,35 +41,6 @@ let formData = {
   images: [] as Array<string>,
 }
 
-if (route.params.id) {
-
-  let i_id = parseInt(route.params.id[0]) // convert id param to a number
-
-  inventoryStore.edit.status = true;
-
-  let inventory = inventoryStore.inventories.find((i) => {
-    return i.id === i_id;
-  });
-
-  if (inventory) {
-    formData = JSON.parse(JSON.stringify(inventory));
-  }
-}
-
-const state = reactive({
-  url: [] as Array<string>,
-});
-
-fetchData().then(() =>
-  brandStore.brands.forEach((brand) => {
-    brands.value.push(brand);
-  })
-);
-
-axios
-  .get(`http://localhost:3000/colors/`)
-  .then((res) => (colors.value = res.data))
-  .catch((err) => console.log(err));
 
 const getModelsByBrand = (id: number) => {
   let brand = variants.find((i) => {
@@ -95,14 +66,45 @@ const getOSByBrand = (id: number) => {
   // console.log(os_versions.value)
 };
 
+
 watch(
   () => brand.value.id,
   () => {
     getModelsByBrand(brand.value.id);
     getOSByBrand(brand.value.id);
-  },
-  { deep: true }
+  }
 );
+
+if (route.params.id) {
+
+  let i_id = parseInt(route.params.id[0])
+
+  inventoryStore.edit.status = true;
+
+  let inventory = inventoryStore.inventories.find((i) => {
+    return i.id === i_id;
+  });
+
+  if (inventory) {
+    brand.value = inventory.model.brand
+    formData = JSON.parse(JSON.stringify(inventory));
+  }
+}
+
+const state = reactive({
+  url: [] as Array<string>,
+});
+
+fetchData().then(() =>
+  brandStore.brands.forEach((brand) => {
+    brands.value.push(brand);
+  })
+);
+
+axios
+  .get(`http://localhost:3000/colors/`)
+  .then((res) => (colors.value = res.data))
+  .catch((err) => console.log(err));
 
 const config = {
   headers: {
@@ -153,6 +155,7 @@ const updateInventory = async (id: string) => {
     })
     .catch(err => console.log(err))
 }
+
 </script>
 
 <template>
@@ -163,7 +166,7 @@ const updateInventory = async (id: string) => {
     <form @submit.prevent>
       <div class="input-group">
         <span class="label">Brand</span>
-        <Autocomplete :items="brands" v-model="brand" :value="formData.model.brand.name" />
+        <Autocomplete :items="brands" v-model="brand" :value="brand.name" />
       </div>
       <div class="input-group">
         <span class="label">Model</span>
