@@ -68,11 +68,12 @@ const getOSByBrand = (id: number) => {
 };
 
 watch(
-  () => brand.value.id,
+  () => brand.value,
   () => {
     getModelsByBrand(brand.value.id);
     getOSByBrand(brand.value.id);
-  }
+  },
+  { deep: true }
 );
 
 const state = reactive({
@@ -81,8 +82,6 @@ const state = reactive({
 
 if (route.params.id) {
   let i_id = parseInt(route.params.id[0]);
-
-  inventoryStore.edit.status = true;
 
   let inventory = inventoryStore.inventories.find((i) => {
     return i.id === i_id;
@@ -153,7 +152,6 @@ const updateInventory = (id: string) => {
     .then((res) => {
       if (res.status === 200) {
         alert("Update successfully");
-        inventoryStore.edit.status = false;
         router.push("/");
       }
     })
@@ -201,6 +199,7 @@ const deleteInventory = (id: string) => {
           :items="models"
           v-model="formData.model"
           :value="formData.model.name ? formData.model.name : null"
+          :brand="brand"
         />
       </div>
       <div class="input-group">
@@ -237,6 +236,7 @@ const deleteInventory = (id: string) => {
           :items="os_versions"
           v-model="formData.os_version"
           :value="formData.os_version.name ? formData.os_version.name : null"
+          :brand="brand"
         />
       </div>
       <div class="input-group">
@@ -249,7 +249,7 @@ const deleteInventory = (id: string) => {
       </div>
       <div class="input-group">
         <span class="label">Price</span>
-        <input type="number" v-model="formData.price" />
+        <input type="number" v-model="formData.price" min="0" />
       </div>
       <div class="input-group">
         <span class="label">Warranty</span>
@@ -402,6 +402,7 @@ const deleteInventory = (id: string) => {
 }
 
 .btn-remove-img:hover {
+  color: #ff2828;
   opacity: 2;
 }
 

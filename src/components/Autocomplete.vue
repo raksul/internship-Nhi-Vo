@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { T } from "@/stores/types";
+import type { Brand, T } from "@/stores/types";
 import { computed } from "@vue/reactivity";
 import { ref, watch } from "vue";
 
 const props = defineProps<{
+  brand?: Brand;
   items: Array<T>;
   modelValue: T;
   value: string | null;
@@ -29,6 +30,14 @@ watch(
   () => selectedOption.value,
   () => {
     emit("update:modelValue", selectedOption.value);
+  }
+);
+
+watch(
+  () => props.brand,
+  () => {
+    selectedOption.value = {} as T;
+    keyword.value = "";
   }
 );
 
