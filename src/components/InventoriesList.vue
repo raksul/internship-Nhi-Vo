@@ -2,9 +2,10 @@
 import { reactive, ref } from "vue";
 import { useInventoriesStore } from "@/stores/inventories";
 import ProductModal from "./ProductModal.vue";
-import Filter from "./Filter.vue";
+import Filter from "./InventoryFilters.vue";
 import { computed } from "@vue/reactivity";
 import axios from "axios";
+
 import type { Inventory } from "@/stores/types";
 
 const store = useInventoriesStore();
@@ -41,8 +42,12 @@ const closeModal = () => {
   isShow.value = false;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const state: any = reactive({
+interface Results {
+  search: string;
+  filteredResults?: Array<Inventory>;
+}
+
+const state: Results = reactive({
   search: "",
   filteredResults: computed(() =>
     store.getFiltered?.filter((i) => {

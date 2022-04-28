@@ -162,7 +162,7 @@
       },
       "condition": "Well used",
       "price": 299,
-      "is_sold": true,
+      "is_sold": false,
       "warranty_expiry": "2022-12-27",
       "images": [
         "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200500_f9744d3f.jpg",
@@ -223,7 +223,7 @@
       "created_at": "2020-01-19T11:37:23Z",
       "sold_at": "2020-08-05T17:16:40Z",
       "price": 679,
-      "is_sold": false,
+      "is_sold": true,
       "warranty_expiry": "2021-02-21",
       "images": [
         "https://media.karousell.com/media/photos/products/2021/8/25/iphone_11_256gb_457_1629876235_ac857fd7_progressive.jpg"
@@ -286,38 +286,6 @@
       "images": [
         "https://i.imgur.com/ieNC1Ot.jpg"
       ]
-    }
-  ],
-  "images": [
-    {
-      "id": 1,
-      "product_id": 1,
-      "src": "https://img.merkandi.com/imgcache/800x600/offer/8plus-64-black-2-1607676715-1607676805.jpg"
-    },
-    {
-      "id": 2,
-      "product_id": 2,
-      "src": "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200500_f9744d3f.jpg"
-    },
-    {
-      "id": 3,
-      "product_id": 2,
-      "src": "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200500_c71cf0d9_progressive.jpg"
-    },
-    {
-      "id": 4,
-      "product_id": 3,
-      "src": "https://media.karousell.com/media/photos/products/2022/2/13/oneplus_6_black_w_original_cha_1644748226_c348c84e_progressive.jpg"
-    },
-    {
-      "id": 5,
-      "product_id": 4,
-      "src": "https://media.karousell.com/media/photos/products/2021/8/25/iphone_11_256gb_457_1629876235_ac857fd7_progressive.jpg"
-    },
-    {
-      "id": 6,
-      "product_id": 5,
-      "src": "https://media.karousell.com/media/photos/products/2022/4/3/samsung_s20_1648990726_769c0a09_progressive.jpg"
     }
   ]
 }

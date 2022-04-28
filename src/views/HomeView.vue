@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import InventoriesList from "../components/InventoriesList.vue";
-import Filter from "../components/Filter.vue";
 </script>
 
 <template>

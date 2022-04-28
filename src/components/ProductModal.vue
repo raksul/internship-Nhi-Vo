@@ -28,14 +28,16 @@ const warrantyDisplay = (date: string) => {
             <p style="font-weight: bold">{{ item.model.name }}</p>
 
             <button class="btn-edit" v-show="!item.is_sold">
-              <router-link style="text-decoration: none; color: #000" :to="{ name: 'edit', params: { id: item.id } }">
+              <router-link
+                style="text-decoration: none; color: #000"
+                :to="{ name: 'edit', params: { id: item.id } }"
+              >
                 <font-awesome-icon :icon="['fas', 'pen']" />
                 Edit
               </router-link>
             </button>
           </div>
           <div class="outline">
-
             <table>
               <tr>
                 <th>Brand</th>
@@ -170,7 +172,7 @@ const warrantyDisplay = (date: string) => {
   width: 100%;
   border: 1px solid #d2d2d2;
   display: flex;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .outline table,

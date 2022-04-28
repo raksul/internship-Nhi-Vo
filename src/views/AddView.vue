@@ -7,6 +7,3 @@ import Form from "../components/Form.vue";
     <template v-slot:title> Add new inventory </template>
   </Form>
 </template>
-
-<style scoped>
-</style>

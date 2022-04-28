@@ -40,7 +40,7 @@ let formData = {
   price: null as number | null,
   is_sold: false,
   warranty_expiry: "",
-  images: [] as Array<string>,
+  images: reactive([] as Array<string>),
 };
 
 const getModelsByBrand = (id: number) => {
@@ -75,6 +75,10 @@ watch(
   }
 );
 
+const state = reactive({
+  url: [] as Array<string>,
+});
+
 if (route.params.id) {
   let i_id = parseInt(route.params.id[0]);
 
@@ -85,14 +89,11 @@ if (route.params.id) {
   });
 
   if (inventory) {
+    state.url = inventory.images;
     brand.value = inventory.model.brand;
     formData = JSON.parse(JSON.stringify(inventory));
   }
 }
-
-const state = reactive({
-  url: [] as Array<string>,
-});
 
 fetchData().then(() =>
   brandStore.brands.forEach((brand) => {
@@ -113,25 +114,28 @@ const config = {
 };
 
 const onFileChange = (e: Event) => {
-  let file = (e.target as HTMLInputElement).files?.[0];
+  let file = (e.target as HTMLInputElement).files?.[0] as Blob;
 
   if (file) {
-    state.url.pop();
-    state.url.push(URL.createObjectURL(file));
-
     axios
       .post(`https://api.imgur.com/3/image`, file, config)
       .then((res) => {
-        console.log(res.data.data.link);
+        state.url.push(URL.createObjectURL(file));
         image.value = res.data.data.link;
+        formData.images.push(image.value);
       })
       .catch((err) => console.log(err));
   }
 };
 
-const addInventory = () => {
-  formData.images.push(image.value);
+const removeImage = async (index: number) => {
+  state.url.splice(index, 1);
+  formData.images.splice(index, 1);
 
+  console.log(formData.images);
+};
+
+const addInventory = () => {
   axios
     .post(`${BASE_URL}`, formData)
     .then((res) => {
@@ -162,12 +166,17 @@ const deleteInventory = (id: string) => {
       "Are you sure you want to delete this item? This action cannot be undone"
     )
   ) {
-    axios.delete(`${BASE_URL}/${id}`).then((res) => {
-      if (res.status === 200) {
-        alert("Item deleted");
-        router.push("/");
-      }
-    });
+    axios
+      .delete(`${BASE_URL}/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Item deleted");
+          router.push("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 };
 </script>
@@ -276,9 +285,15 @@ const deleteInventory = (id: string) => {
       </div>
       <div class="input-group image-upload">
         <span class="label">Image</span>
-        <input type="file" name="image" @change="onFileChange" />
-        <div class="preview">
-          <img v-if="state.url[0]" :src="state.url[0]" />
+        <input type="file" name="image" @input="onFileChange" />
+        <div v-if="state.url.length > 0" class="previews-container">
+          <div class="preview" v-for="(image, index) in state.url" :key="index">
+            <button class="btn-remove-img" @click="removeImage(index)">
+              <span>&times;</span>
+            </button>
+            <img :src="image" style="margin-inline-end: 10px" />
+            <!-- <button @click="removeImage(index)">Remove</button> -->
+          </div>
         </div>
       </div>
       <div class="btn-container">
@@ -359,9 +374,35 @@ const deleteInventory = (id: string) => {
   border: 2px solid var(--primary-color);
 }
 
+.previews-container {
+  display: flex;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+}
+
 .preview img {
   margin-top: 10px;
   width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.btn-remove-img {
+  position: absolute;
+  background: transparent;
+  color: #fff;
+  opacity: 0.5;
+  top: -8px;
+  right: 0;
+  z-index: 999;
+  font-size: 30px;
+}
+
+.btn-remove-img:hover {
+  opacity: 2;
 }
 
 .btn-container {

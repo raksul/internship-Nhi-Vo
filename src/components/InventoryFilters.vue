@@ -1,30 +1,32 @@
 <script lang="ts">
 export default {
-  inheritAttrs: false
-}
+  inheritAttrs: false,
+};
 </script>
 
 <script setup lang="ts">
-import { useInventoriesStore } from '@/stores/inventories';
-import { ref, watch } from 'vue';
+import { useInventoriesStore } from "@/stores/inventories";
+import { ref, watch } from "vue";
 
-const store = useInventoriesStore()
-const selected = ref("in-stock" as string)
-const emit = defineEmits(['input', 'update:modelValue'])
+const store = useInventoriesStore();
+const selected = ref("in-stock" as string);
+const emit = defineEmits(["input", "update:modelValue"]);
 
-watch(() => selected.value, () => {
-  store.filter = selected.value
-})
+watch(
+  () => selected.value,
+  () => {
+    store.filter = selected.value;
+  }
+);
 
 const query = (e: Event) => {
-  emit('update:modelValue', (e.target as HTMLInputElement).value)
+  emit("update:modelValue", (e.target as HTMLInputElement).value);
 };
-
 </script>
 
 <template>
   <input type="text" class="filter" placeholder="Search..." @input="query" />
-  <div class=" select">
+  <div class="select">
     <select class="custom-select" v-model="selected">
       <option value="in-stock">In-stock items</option>
       <option value="all">All</option>
@@ -44,7 +46,7 @@ const query = (e: Event) => {
 .filter {
   border: 1px solid #d2d2d2;
   border-radius: 5px;
-  width: 300px;
+  width: 250px;
   height: 2.5em;
   margin-bottom: 15px;
   padding: 10px;
@@ -54,7 +56,7 @@ const query = (e: Event) => {
 
 .select {
   position: relative;
-  min-width: 200px;
+  min-width: 150px;
 }
 
 .select svg {
