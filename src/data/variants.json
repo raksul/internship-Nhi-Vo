@@ -23,7 +23,17 @@
                     "name": "iPhone 11",
                     "year": 2019,
                     "display": 6.1
-                }
+                },
+                {
+                    "id": 6,
+                    "brand": {
+                      "id": 1,
+                      "name": "Apple"
+                    },
+                    "name": "iPhone 12 Pro",
+                    "year": 2020,
+                    "display": 6.1
+                  }
             ],
             "os_version": [
                 {
@@ -59,7 +69,17 @@
                     "name": "Galaxy S22+",
                     "year": 2020,
                     "display": 6.2
-                }
+                },
+                {
+                    "id": 7,
+                    "brand": {
+                      "id": 2,
+                      "name": "Samsung"
+                    },
+                    "name": "Samsung A52",
+                    "year": 2021,
+                    "display": 6.5
+                  }
             ],
             "os_version": [
                 {

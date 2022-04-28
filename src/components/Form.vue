@@ -30,6 +30,8 @@ const image = ref("");
 const route = useRoute();
 const router = useRouter();
 
+const props = defineProps(["id"]);
+
 let formData = {
   id: null,
   model: {} as Model,
@@ -80,7 +82,7 @@ const state = reactive({
   url: [] as Array<string>,
 });
 
-if (route.params.id) {
+if (props.id) {
   let i_id = parseInt(route.params.id[0]);
 
   let inventory = inventoryStore.inventories.find((i) => {
@@ -123,15 +125,16 @@ const onFileChange = (e: Event) => {
         image.value = res.data.data.link;
         formData.images.push(image.value);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert("Cannot upload image. Please try again");
+        console.log(err);
+      });
   }
 };
 
 const removeImage = async (index: number) => {
   state.url.splice(index, 1);
   formData.images.splice(index, 1);
-
-  console.log(formData.images);
 };
 
 const addInventory = () => {
@@ -374,13 +377,13 @@ const deleteInventory = (id: string) => {
   border: 2px solid var(--primary-color);
 }
 
-.previews-container {
-  display: flex;
+.image-upload input .on-error {
+  border: 2px solid var(--danger-color);
 }
 
-.preview {
+.previews-container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .preview img {

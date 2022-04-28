@@ -107,6 +107,26 @@
       "name": "Galaxy S22+",
       "year": 2020,
       "display": 6.2
+    },
+    {
+      "id": 6,
+      "brand": {
+        "id": 1,
+        "name": "Apple"
+      },
+      "name": "iPhone 12 Pro",
+      "year": 2020,
+      "display": 6.1
+    },
+    {
+      "id": 7,
+      "brand": {
+        "id": 2,
+        "name": "Samsung"
+      },
+      "name": "Samsung A52",
+      "year": 2021,
+      "display": 6.5
     }
   ],
   "inventories": [
@@ -252,7 +272,7 @@
       },
       "condition": "Well used",
       "price": 528,
-      "is_sold": false,
+      "is_sold": true,
       "warranty_expiry": "2022-05-29",
       "images": [
         "https://media.karousell.com/media/photos/products/2022/4/3/samsung_s20_1648990726_769c0a09_progressive.jpg"
@@ -285,6 +305,65 @@
       "warranty_expiry": "2022-12-31",
       "images": [
         "https://i.imgur.com/ieNC1Ot.jpg"
+      ]
+    },
+    {
+      "id": 7,
+      "model": {
+        "id": 6,
+        "brand": {
+          "id": 1,
+          "name": "Apple"
+        },
+        "name": "iPhone 12 Pro",
+        "year": 2020,
+        "display": 6.1
+      },
+      "os_version": {
+        "id": 3,
+        "name": "iOS 14"
+      },
+      "memory_size": 512,
+      "color": {
+        "id": 2,
+        "name": "Blue"
+      },
+      "condition": "Well used",
+      "price": 1000,
+      "is_sold": false,
+      "warranty_expiry": "2022-12-30",
+      "images": [
+        "https://i.imgur.com/omKDquN.jpg"
+      ]
+    },
+    {
+      "id": 8,
+      "model": {
+        "id": 7,
+        "brand": {
+          "id": 2,
+          "name": "Samsung"
+        },
+        "name": "Samsung A52",
+        "year": 2021,
+        "display": 6.5
+      },
+      "os_version": {
+        "id": 4,
+        "name": "Android 12"
+      },
+      "memory_size": 128,
+      "color": {
+        "id": 4,
+        "name": "Purple"
+      },
+      "condition": "Like new",
+      "price": 259,
+      "is_sold": false,
+      "warranty_expiry": "2021-12-31",
+      "images": [
+        "https://i.imgur.com/jd2pfBl.jpg",
+        "https://i.imgur.com/DuwY64M.jpg"
       ]
     }
   ]
