@@ -150,6 +150,7 @@ const updateInventory = async (id: string) => {
     .then(res => {
       if (res.status === 200) {
         alert("Update successfully")
+        inventoryStore.edit.status = false
         router.push("/")
       }
     })
@@ -166,11 +167,12 @@ const updateInventory = async (id: string) => {
     <form @submit.prevent>
       <div class="input-group">
         <span class="label">Brand</span>
-        <Autocomplete :items="brands" v-model="brand" :value="brand.name" />
+        <Autocomplete :items="brands" v-model="brand" :value="brand.name ? brand.name : null" />
       </div>
       <div class="input-group">
         <span class="label">Model</span>
-        <Autocomplete :items="models" v-model="formData.model" :value="formData.model.name" />
+        <Autocomplete :items="models" v-model="formData.model"
+          :value="formData.model.name ? formData.model.name : null" />
       </div>
       <div class="input-group">
         <span class="label">Memory Size</span>
@@ -193,11 +195,13 @@ const updateInventory = async (id: string) => {
       </div>
       <div class="input-group">
         <span class="label">OS Version</span>
-        <Autocomplete :items="os_versions" v-model="formData.os_version" :value="formData.os_version.name" />
+        <Autocomplete :items="os_versions" v-model="formData.os_version"
+          :value="formData.os_version.name ? formData.os_version.name : null" />
       </div>
       <div class="input-group">
         <span class="label">Color</span>
-        <Autocomplete :items="colors" v-model="formData.color" :value="formData.color.name" />
+        <Autocomplete :items="colors" v-model="formData.color"
+          :value="formData.color.name ? formData.color.name : null" />
       </div>
       <div class="input-group">
         <span class="label">Price</span>

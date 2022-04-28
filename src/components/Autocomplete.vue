@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import type { Brand, Model, Option } from "@/stores/types";
 import { ref, watch } from "vue";
 
+type T = Brand | Model | Option
+
 const props = defineProps<{
-  items: Array<any>;
+  items: Array<T>;
   modelValue: object;
-  value: string;
+  value: string | null;
 }>();
 
 const emit = defineEmits<{
@@ -12,8 +15,11 @@ const emit = defineEmits<{
 }>();
 
 const isShow = ref(false);
-const keyword = ref(props.value);
-const results = ref([] as Array<any>);
+const keyword = ref();
+
+props.value ? keyword.value = props.value : ""
+
+const results = ref([] as Array<T>);
 const currentIdx = ref(0);
 
 const selectedOption = ref({});
@@ -30,8 +36,8 @@ watch(
 );
 
 const filterResults = () => {
-  results.value = props.items.filter((i: any) => {
-    return i.name.toLowerCase().includes(keyword.value.toLowerCase());
+  results.value = props.items.filter((i: T) => {
+    return i.name.toLowerCase().includes(keyword.value?.toLowerCase());
   });
 };
 
@@ -63,7 +69,7 @@ const onBlur = () => {
   isShow.value = false;
 };
 
-const setResult = (result: any) => {
+const setResult = (result: T) => {
   keyword.value = result.name;
   selectedOption.value = result;
   isShow.value = false;
