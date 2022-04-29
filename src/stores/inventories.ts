@@ -9,7 +9,7 @@ export const useInventoriesStore = defineStore({
   state: () => ({
     inventories: [] as Inventory[],
     inventory: {} as Inventory,
-    edit: { status: false, id: null },
+    edit: { status: false, id: null as unknown as number },
     filter: "in-stock",
   }),
   getters: {
@@ -24,7 +24,7 @@ export const useInventoriesStore = defineStore({
     },
   },
   actions: {
-    async fetchData() {
+    async fetchInventories() {
       await axios
         .get(BASE_URL)
         .then((res) => (this.inventories = res.data))

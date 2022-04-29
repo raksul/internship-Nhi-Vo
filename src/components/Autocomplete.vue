@@ -80,14 +80,17 @@ const onBlur = () => {
 };
 
 const setResult = (result: T) => {
-  keyword.value = result.name;
-  selectedOption.value = result;
-  isShow.value = false;
+  if (keyword.value !== result.name) {
+    keyword.value = result.name;
+    selectedOption.value = result;
+    isShow.value = false;
+  }
 };
-
 const onEnter = () => {
-  keyword.value = results.value[currentIdx.value].name;
-  selectedOption.value = results.value[currentIdx.value];
+  if (keyword.value !== results.value[currentIdx.value].name) {
+    keyword.value = results.value[currentIdx.value].name;
+    selectedOption.value = results.value[currentIdx.value];
+  }
   isShow.value = false;
   currentIdx.value = 0;
 };

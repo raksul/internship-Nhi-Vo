@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { useInventoriesStore } from "@/stores/inventories";
 import Form from "../components/Form.vue";
-
-const inventoryStore = useInventoriesStore();
-
-inventoryStore.edit.status = true;
 </script>
 
 <template>

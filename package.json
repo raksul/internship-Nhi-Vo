@@ -16,6 +16,7 @@
     "@types/vuelidate": "^0.7.15",
     "@vuelidate/core": "^2.0.0-alpha.40",
     "@vuelidate/validators": "^2.0.0-alpha.28",
+    "@vueuse/core": "^8.3.1",
     "axios": "^0.26.1",
     "fuse.js": "^6.5.3",
     "json-server": "^0.17.0",

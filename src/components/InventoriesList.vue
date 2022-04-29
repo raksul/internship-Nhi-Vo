@@ -9,9 +9,9 @@ import axios from "axios";
 import type { Inventory } from "@/stores/types";
 
 const store = useInventoriesStore();
-const { fetchData } = useInventoriesStore();
+const { fetchInventories } = useInventoriesStore();
 
-fetchData();
+fetchInventories();
 
 const labels = [
   "Image",
