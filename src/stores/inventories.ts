@@ -30,8 +30,8 @@ export const useInventoriesStore = defineStore({
         .then((res) => (this.inventories = res.data))
         .catch((err) => console.log(err));
     },
-    async fetchDataById(id: number) {
-      await axios
+    fetchDataById(id: string) {
+      axios
         .get(`${BASE_URL}/${id}`)
         .then((res) => (this.inventory = res.data))
         .catch((err) => console.log(err));

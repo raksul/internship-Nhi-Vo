@@ -7,7 +7,7 @@ import Autocomplete from "./Autocomplete.vue";
 import { variants } from "@/data/variants.json";
 import type { Brand, Model, Option } from "@/stores/types";
 import axios from "axios";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const BASE_URL = "http://localhost:3000/inventories";
 
@@ -27,13 +27,13 @@ const colors = ref([] as Array<Option>);
 const brand = ref({} as Brand);
 const image = ref("");
 
-const route = useRoute();
 const router = useRouter();
 
 const props = defineProps(["id"]);
 
-let formData = {
-  id: null,
+const found = ref(false);
+
+let formData = reactive({
   model: {} as Model,
   os_version: {} as Option,
   memory_size: null as number | null,
@@ -42,8 +42,31 @@ let formData = {
   price: null as number | null,
   is_sold: false,
   warranty_expiry: "",
-  images: reactive([] as Array<string>),
-};
+  images: [] as Array<string>,
+});
+
+if (props.id && inventoryStore.edit.status === true) {
+  axios.get(`${BASE_URL}/${props.id}`).then((res) => {
+    brand.value = res.data.model.brand;
+    formData.model = res.data.model;
+    formData.color = res.data.color;
+    formData.os_version = res.data.os_version;
+    formData.memory_size = res.data.memory_size;
+    formData.condition = res.data.condition;
+    formData.price = res.data.price;
+    formData.warranty_expiry = res.data.warranty_expiry;
+    formData.images = res.data.images;
+
+    console.log(formData);
+    found.value = true;
+  });
+} else {
+  found.value = true;
+}
+
+const state = reactive({
+  url: [] as Array<string>,
+});
 
 const getModelsByBrand = (id: number) => {
   let brand = variants.find((i) => {
@@ -65,7 +88,6 @@ const getOSByBrand = (id: number) => {
   if (brand) {
     os_versions.value = brand.os_version;
   }
-
   // console.log(os_versions.value)
 };
 
@@ -77,24 +99,6 @@ watch(
   },
   { deep: true }
 );
-
-const state = reactive({
-  url: [] as Array<string>,
-});
-
-if (props.id) {
-  let i_id = parseInt(route.params.id[0]);
-
-  let inventory = inventoryStore.inventories.find((i) => {
-    return i.id === i_id;
-  });
-
-  if (inventory) {
-    state.url = inventory.images;
-    brand.value = inventory.model.brand;
-    formData = JSON.parse(JSON.stringify(inventory));
-  }
-}
 
 fetchData().then(() =>
   brandStore.brands.forEach((brand) => {
@@ -183,7 +187,7 @@ const deleteInventory = (id: string) => {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="found">
     <h2 class="title">
       <slot name="title" class="title"></slot>
     </h2>
@@ -307,7 +311,7 @@ const deleteInventory = (id: string) => {
           <button
             v-if="inventoryStore.edit.status"
             class="btn-delete"
-            @click="deleteInventory($route.params.id)"
+            @click="deleteInventory(props.id)"
           >
             Delete
           </button>
@@ -320,11 +324,7 @@ const deleteInventory = (id: string) => {
         >
           Add
         </button>
-        <button
-          v-else
-          class="btn-save"
-          @click="updateInventory($route.params.id)"
-        >
+        <button v-else class="btn-save" @click="updateInventory(props.id)">
           Save
         </button>
       </div>

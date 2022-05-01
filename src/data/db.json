@@ -133,14 +133,14 @@
     {
       "id": 1,
       "model": {
-        "id": 1,
+        "id": 4,
         "brand": {
           "id": 1,
           "name": "Apple"
         },
-        "name": "iPhone 8",
-        "year": 2017,
-        "display": 4.7
+        "name": "iPhone 11",
+        "year": 2019,
+        "display": 6.1
       },
       "os_version": {
         "id": 1,
@@ -152,7 +152,7 @@
         "name": "Black"
       },
       "condition": "Well used",
-      "price": 199,
+      "price": 299,
       "is_sold": false,
       "warranty_expiry": "2022-10-01",
       "images": [
