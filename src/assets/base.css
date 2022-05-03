@@ -21,7 +21,7 @@
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 
-  --danger-color: #ff4040;
+  --text-danger: #ff4747;
 }
 
 /* semantic color variables for this project */

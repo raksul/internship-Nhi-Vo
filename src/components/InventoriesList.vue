@@ -131,7 +131,7 @@ const markSold = (id: number) => {
 }
 
 /* temporary */
-@media (max-width: 600px) {
+@media (max-width: 745px) {
   .row {
     display: none;
   }

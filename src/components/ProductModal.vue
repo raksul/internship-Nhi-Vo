@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import ImageCarousel from "./ImageCarousel.vue";
 
 const props = defineProps(["item"]);
 defineEmits(["close"]);
@@ -23,8 +24,11 @@ const warrantyDisplay = (date: string) => {
 
       <section class="modal-body">
         <div class="container">
-          <div style="text-align: center">
-            <img class="thumbnail" :src="item.images[0]" />
+          <div style="flex-basis: 50%; text-align: center">
+            <!-- <img class="thumbnail" :src="item.images[0]" /> -->
+
+            <ImageCarousel :images="item.images" />
+
             <p style="font-weight: bold">{{ item.model.name }}</p>
 
             <button class="btn-edit" v-show="!item.is_sold">

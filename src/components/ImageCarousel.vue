@@ -1,0 +1,101 @@
+<script setup lang="ts">
+import { computed } from "@vue/reactivity";
+import { ref } from "vue";
+
+const props = defineProps<{
+  images: Array<string>;
+}>();
+
+const current = ref(0);
+
+const start = ref(0);
+const end = ref(3);
+
+const total = computed(() => props.images.length);
+
+const prev = () => {
+  start.value = start.value === 0 ? 0 : start.value - 1;
+  end.value = start.value === 0 ? 3 : end.value - 1;
+
+  current.value = current.value === 0 ? 0 : current.value - 1;
+};
+
+const next = () => {
+  start.value = end.value >= total.value ? start.value : start.value + 1;
+  end.value = end.value >= total.value ? end.value : end.value + 1;
+
+  current.value =
+    current.value === total.value - 1 ? total.value - 1 : current.value + 1;
+};
+</script>
+
+<template>
+  <div class="preview">
+    <img :src="props.images[current]" alt="" />
+  </div>
+  <div class="thumbnail-slider">
+    <a class="prev" @click="prev">&#10094;</a>
+    <div
+      class="slide"
+      v-for="(image, index) in props.images.slice(start, end)"
+      :key="index"
+      :class="{ active: image === props.images[current] }"
+    >
+      <img :src="image" />
+    </div>
+    <a class="next" @click="next">&#10095;</a>
+  </div>
+</template>
+
+<style scoped>
+.preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.thumbnail-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide {
+  opacity: 0.5;
+}
+
+.slide img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  cursor: pointer;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.slide.active {
+  opacity: 1 !important;
+}
+
+.slide.active img {
+  border: 1px solid rgb(72, 72, 72);
+}
+
+.prev,
+.next {
+  z-index: 99;
+  position: absolute;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+</style>

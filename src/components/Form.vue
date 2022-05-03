@@ -31,9 +31,12 @@ const router = useRouter();
 
 const props = defineProps(["id"]);
 
-const found = ref(false);
+const loading = ref(true);
+
+const errors = ref([] as Array<string>);
 
 let formData = reactive({
+  id: null,
   model: {} as Model,
   os_version: {} as Option,
   memory_size: null as number | null,
@@ -57,16 +60,11 @@ if (props.id && inventoryStore.edit.status === true) {
     formData.warranty_expiry = res.data.warranty_expiry;
     formData.images = res.data.images;
 
-    console.log(formData);
-    found.value = true;
+    loading.value = false;
   });
 } else {
-  found.value = true;
+  loading.value = false;
 }
-
-const state = reactive({
-  url: [] as Array<string>,
-});
 
 const getModelsByBrand = (id: number) => {
   let brand = variants.find((i) => {
@@ -125,7 +123,6 @@ const onFileChange = (e: Event) => {
     axios
       .post(`https://api.imgur.com/3/image`, file, config)
       .then((res) => {
-        state.url.push(URL.createObjectURL(file));
         image.value = res.data.data.link;
         formData.images.push(image.value);
       })
@@ -137,32 +134,63 @@ const onFileChange = (e: Event) => {
 };
 
 const removeImage = async (index: number) => {
-  state.url.splice(index, 1);
   formData.images.splice(index, 1);
 };
 
+const checkInput = () => {
+  if (Object.keys(formData.model).length === 0) {
+    errors.value.push("Please select a valid model");
+  }
+  if (Object.keys(formData.color).length === 0) {
+    errors.value.push("Please select a color");
+  }
+  if (Object.keys(formData.os_version).length === 0) {
+    errors.value.push("Please select an OS version");
+  }
+  if (!formData.memory_size) {
+    errors.value.push("Please select a memory size");
+  }
+  if (!formData.price) {
+    errors.value.push("Please enter a price");
+  }
+  if (formData.condition === "") {
+    errors.value.push("Please select a condition");
+  }
+  if (formData.warranty_expiry === "") {
+    errors.value.push("Please select the warranty expiry date");
+  }
+};
+
 const addInventory = () => {
-  axios
-    .post(`${BASE_URL}`, formData)
-    .then((res) => {
-      if (res.status === 201) {
-        alert("Inventory added successfully");
-        router.push("/");
-      }
-    })
-    .catch((err) => console.log(err));
+  errors.value = [];
+  checkInput();
+  if (errors.value.length === 0) {
+    axios
+      .post(`${BASE_URL}`, formData)
+      .then((res) => {
+        if (res.status === 201) {
+          alert("Inventory added successfully");
+          router.push("/");
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 };
 
 const updateInventory = (id: string) => {
-  axios
-    .put(`${BASE_URL}/${id}`, formData)
-    .then((res) => {
-      if (res.status === 200) {
-        alert("Update successfully");
-        router.push("/");
-      }
-    })
-    .catch((err) => console.log(err));
+  errors.value = [];
+  checkInput();
+  if (errors.value.length === 0) {
+    axios
+      .put(`${BASE_URL}/${id}`, formData)
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Update successfully");
+          router.push("/");
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 };
 
 const deleteInventory = (id: string) => {
@@ -187,7 +215,7 @@ const deleteInventory = (id: string) => {
 </script>
 
 <template>
-  <div class="wrapper" v-if="found">
+  <div class="wrapper" v-if="!loading">
     <h2 class="title">
       <slot name="title" class="title"></slot>
     </h2>
@@ -256,7 +284,7 @@ const deleteInventory = (id: string) => {
       </div>
       <div class="input-group">
         <span class="label">Price</span>
-        <input type="number" v-model="formData.price" min="0" />
+        <input type="number" v-model="formData.price" min="0" ref="input" />
       </div>
       <div class="input-group">
         <span class="label">Warranty</span>
@@ -293,8 +321,12 @@ const deleteInventory = (id: string) => {
       <div class="input-group image-upload">
         <span class="label">Image</span>
         <input type="file" name="image" @input="onFileChange" />
-        <div v-if="state.url.length > 0" class="previews-container">
-          <div class="preview" v-for="(image, index) in state.url" :key="index">
+        <div v-if="formData.images.length > 0" class="previews-container">
+          <div
+            class="preview"
+            v-for="(image, index) in formData.images"
+            :key="index"
+          >
             <button class="btn-remove-img" @click="removeImage(index)">
               <span>&times;</span>
             </button>
@@ -302,6 +334,14 @@ const deleteInventory = (id: string) => {
             <!-- <button @click="removeImage(index)">Remove</button> -->
           </div>
         </div>
+      </div>
+      <div
+        v-if="errors.length > 0"
+        style="color: var(--text-danger); flex-basis: 100%"
+      >
+        <ul>
+          <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+        </ul>
       </div>
       <div class="btn-container">
         <div>
@@ -377,8 +417,8 @@ const deleteInventory = (id: string) => {
   border: 2px solid var(--primary-color);
 }
 
-.image-upload input .on-error {
-  border: 2px solid var(--danger-color);
+.on-error {
+  border: 2px solid var(--danger-color) !important;
 }
 
 .previews-container {
@@ -410,6 +450,7 @@ const deleteInventory = (id: string) => {
 }
 
 .btn-container {
+  margin-top: 15px;
   width: 100%;
   display: flex;
   justify-content: space-between;

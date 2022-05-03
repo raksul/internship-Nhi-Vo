@@ -27,6 +27,15 @@ const computedValue = computed(() => props.value);
 props.value ? (keyword.value = computedValue.value) : (keyword.value = "");
 
 watch(
+  () => keyword.value,
+  () => {
+    if (keyword.value === "") {
+      selectedOption.value = {} as T;
+    }
+  }
+);
+
+watch(
   () => selectedOption.value,
   () => {
     emit("update:modelValue", selectedOption.value);
@@ -135,6 +144,9 @@ const onEnter = () => {
   font-size: 1rem;
   border: 2px solid #d2d2d2;
   border-radius: 10px;
+}
+.on-error {
+  border: 2px solid var(--danger-color) !important;
 }
 
 .autocomplete input:focus {

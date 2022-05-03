@@ -9,7 +9,7 @@ import { useInventoriesStore } from "@/stores/inventories";
 import { ref, watch } from "vue";
 
 const store = useInventoriesStore();
-const selected = ref("in-stock" as string);
+const selected = ref(store.filter);
 const emit = defineEmits(["input", "update:modelValue"]);
 
 watch(

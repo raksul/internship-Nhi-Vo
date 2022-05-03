@@ -133,14 +133,14 @@
     {
       "id": 1,
       "model": {
-        "id": 4,
+        "id": 1,
         "brand": {
           "id": 1,
           "name": "Apple"
         },
-        "name": "iPhone 11",
-        "year": 2019,
-        "display": 6.1
+        "name": "iPhone 8",
+        "year": 2017,
+        "display": 4.7
       },
       "os_version": {
         "id": 1,
@@ -186,7 +186,9 @@
       "warranty_expiry": "2022-12-27",
       "images": [
         "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200500_f9744d3f.jpg",
-        "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200500_c71cf0d9_progressive.jpg"
+        "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200500_c71cf0d9_progressive.jpg",
+        "https://media.karousell.com/media/photos/products/2019/08/19/samsung_note_9_1566200501_4f961611_progressive.jpg",
+        "https://cdn.tgdd.vn/Files/2018/12/29/1141320/1_800x495.jpg"
       ]
     },
     {
