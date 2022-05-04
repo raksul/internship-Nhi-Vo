@@ -1,15 +1,13 @@
-import axios from "axios";
+import { getInventories, getInventoryById } from "@/services";
 import { defineStore } from "pinia";
 import type { Inventory } from "./types";
-
-const BASE_URL = "http://localhost:3000/inventories";
 
 export const useInventoriesStore = defineStore({
   id: "inventories",
   state: () => ({
-    inventories: [] as Inventory[],
+    inventories: [] as Array<Inventory>,
     inventory: {} as Inventory,
-    edit: { status: false, id: null as unknown as number },
+    edit: { status: false },
     filter: "in-stock",
   }),
   getters: {
@@ -25,14 +23,12 @@ export const useInventoriesStore = defineStore({
   },
   actions: {
     async fetchInventories() {
-      await axios
-        .get(BASE_URL)
+      await getInventories()
         .then((res) => (this.inventories = res.data))
         .catch((err) => console.log(err));
     },
-    fetchDataById(id: string) {
-      axios
-        .get(`${BASE_URL}/${id}`)
+    async fetchItemById(id: string) {
+      await getInventoryById(id)
         .then((res) => (this.inventory = res.data))
         .catch((err) => console.log(err));
     },

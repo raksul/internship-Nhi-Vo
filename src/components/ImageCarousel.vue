@@ -80,7 +80,7 @@ const next = () => {
 }
 
 .slide.active img {
-  border: 1px solid rgb(72, 72, 72);
+  border: 1px solid rgb(126, 126, 126);
 }
 
 .prev,

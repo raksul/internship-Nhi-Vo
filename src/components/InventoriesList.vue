@@ -4,9 +4,9 @@ import { useInventoriesStore } from "@/stores/inventories";
 import ProductModal from "./ProductModal.vue";
 import Filter from "./InventoryFilters.vue";
 import { computed } from "@vue/reactivity";
-import axios from "axios";
 
 import type { Inventory } from "@/stores/types";
+import { updateStatus } from "@/services";
 
 const store = useInventoriesStore();
 const { fetchInventories } = useInventoriesStore();
@@ -61,8 +61,7 @@ const state: Results = reactive({
 
 const markSold = (id: number) => {
   if (confirm("Mark this item as sold?")) {
-    axios
-      .patch(`http://localhost:3000/inventories/${id}`, { is_sold: true })
+    updateStatus(id.toString())
       .then(() => {
         let index = store.inventories.findIndex((item) => item.id === id);
         store.markAsSold(index);
@@ -178,10 +177,11 @@ table {
 
   .table tr {
     border: 1px solid #ccc;
+    border-radius: 5px;
   }
 
   .table tr:not(:first-child) {
-    border-top: none;
+    margin-top: 10px;
   }
 
   .table td {

@@ -1,8 +1,6 @@
-import axios from "axios";
+import { getBrandById, getBrands } from "@/services";
 import { defineStore } from "pinia";
 import type { Brand } from "./types";
-
-const BASE_URL = "http://localhost:3000/brands";
 
 export const useBrandStore = defineStore({
   id: "brand",
@@ -12,20 +10,15 @@ export const useBrandStore = defineStore({
     option: {} as Brand,
   }),
   actions: {
-    async fetchData() {
-      await axios
-        .get(BASE_URL)
+    async getBrands() {
+      await getBrands()
         .then((res) => (this.brands = res.data))
         .catch((err) => console.log(err));
     },
-    async fetchDataById(id: number) {
-      await axios
-        .get(`${BASE_URL}/${id}`)
+    async getBrandById(id: string) {
+      await getBrandById(id)
         .then((res) => (this.brand = res.data))
         .catch((err) => console.log(err));
-    },
-    async addBrand() {
-      await axios.post(BASE_URL, {});
     },
   },
 });

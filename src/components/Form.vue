@@ -2,6 +2,14 @@
 import { useBrandStore } from "@/stores/brands";
 import { reactive, ref, watch } from "vue";
 import { useInventoriesStore } from "../stores/inventories";
+import {
+  getInventoryById,
+  saveInventory,
+  updateInventory,
+  deleteInventory,
+  getColors,
+} from "../services/index";
+
 import Autocomplete from "./Autocomplete.vue";
 
 import { variants } from "@/data/variants.json";
@@ -9,15 +17,13 @@ import type { Brand, Model, Option } from "@/stores/types";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-const BASE_URL = "http://localhost:3000/inventories";
-
 const memorySizes = [64, 128, 256, 512];
 const conditions = ["Like new", "Well used", "Heavily used"];
 
 const brandStore = useBrandStore();
 const inventoryStore = useInventoriesStore();
 
-const { fetchData } = useBrandStore();
+const { getBrands } = useBrandStore();
 
 const brands = ref([] as Array<Brand>);
 const models = ref([] as Array<Model>);
@@ -49,7 +55,7 @@ let formData = reactive({
 });
 
 if (props.id && inventoryStore.edit.status === true) {
-  axios.get(`${BASE_URL}/${props.id}`).then((res) => {
+  getInventoryById(props.id).then((res) => {
     brand.value = res.data.model.brand;
     formData.model = res.data.model;
     formData.color = res.data.color;
@@ -98,14 +104,13 @@ watch(
   { deep: true }
 );
 
-fetchData().then(() =>
+getBrands().then(() =>
   brandStore.brands.forEach((brand) => {
     brands.value.push(brand);
   })
 );
 
-axios
-  .get(`http://localhost:3000/colors/`)
+getColors()
   .then((res) => (colors.value = res.data))
   .catch((err) => console.log(err));
 
@@ -161,12 +166,11 @@ const checkInput = () => {
   }
 };
 
-const addInventory = () => {
+const addItem = () => {
   errors.value = [];
   checkInput();
   if (errors.value.length === 0) {
-    axios
-      .post(`${BASE_URL}`, formData)
+    saveInventory(formData)
       .then((res) => {
         if (res.status === 201) {
           alert("Inventory added successfully");
@@ -177,12 +181,11 @@ const addInventory = () => {
   }
 };
 
-const updateInventory = (id: string) => {
+const updateItem = (id: string) => {
   errors.value = [];
   checkInput();
   if (errors.value.length === 0) {
-    axios
-      .put(`${BASE_URL}/${id}`, formData)
+    updateInventory(id, formData)
       .then((res) => {
         if (res.status === 200) {
           alert("Update successfully");
@@ -193,14 +196,13 @@ const updateInventory = (id: string) => {
   }
 };
 
-const deleteInventory = (id: string) => {
+const deleteItem = (id: string) => {
   if (
     confirm(
       "Are you sure you want to delete this item? This action cannot be undone"
     )
   ) {
-    axios
-      .delete(`${BASE_URL}/${id}`)
+    deleteInventory(id)
       .then((res) => {
         if (res.status === 200) {
           alert("Item deleted");
@@ -351,7 +353,7 @@ const deleteInventory = (id: string) => {
           <button
             v-if="inventoryStore.edit.status"
             class="btn-delete"
-            @click="deleteInventory(props.id)"
+            @click="deleteItem(props.id)"
           >
             Delete
           </button>
@@ -360,11 +362,11 @@ const deleteInventory = (id: string) => {
         <button
           v-if="!inventoryStore.edit.status"
           class="btn-save"
-          @click="addInventory"
+          @click="addItem"
         >
           Add
         </button>
-        <button v-else class="btn-save" @click="updateInventory(props.id)">
+        <button v-else class="btn-save" @click="updateItem(props.id)">
           Save
         </button>
       </div>
