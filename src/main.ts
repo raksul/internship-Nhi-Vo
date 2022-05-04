@@ -10,12 +10,13 @@ import {
   faMobileScreenButton,
   faPen,
   faTag,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const app = createApp(App);
 
-library.add({ faPlus, faMobileScreenButton, faPen, faTag });
+library.add({ faPlus, faMobileScreenButton, faPen, faTag, faFilter });
 
 app.use(createPinia());
 app.use(router);

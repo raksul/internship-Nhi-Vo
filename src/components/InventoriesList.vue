@@ -75,12 +75,6 @@ const markSold = (id: number) => {
 <template>
   <div class="row">
     <Filter v-model="state.search" />
-    <button class="add-btn">
-      <router-link class="button-link" to="/add">
-        <font-awesome-icon :icon="['fas', 'plus']" />
-        Add new inventory
-      </router-link>
-    </button>
   </div>
   <table class="table">
     <thead>
@@ -131,31 +125,11 @@ const markSold = (id: number) => {
 }
 
 /* temporary */
-@media (max-width: 745px) {
+/* @media (max-width: 745px) {
   .row {
     display: none;
   }
-}
-
-.add-btn .button-link {
-  text-decoration: none;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.add-btn {
-  background-color: var(--primary-color);
-  border: none;
-  border-radius: 5px;
-  margin-left: auto;
-  margin-bottom: 15px;
-  cursor: pointer;
-}
-
-.add-btn:hover {
-  background-color: #91b2ff;
-}
+} */
 
 table {
   border: 1px solid #ccc;
