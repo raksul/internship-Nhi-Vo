@@ -123,13 +123,6 @@ const markSold = (id: number) => {
   display: flex;
 }
 
-/* temporary */
-/* @media (max-width: 745px) {
-  .row {
-    display: none;
-  }
-} */
-
 table {
   border: 1px solid #ccc;
   border-collapse: collapse;
@@ -181,7 +174,7 @@ table {
   }
 
   .table tr:not(:first-child) {
-    margin-top: 10px;
+    margin-top: 15px;
   }
 
   .table td {

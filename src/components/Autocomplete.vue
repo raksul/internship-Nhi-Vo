@@ -8,6 +8,7 @@ const props = defineProps<{
   items: Array<T>;
   modelValue: T;
   value: string | null;
+  className?: string | null;
 }>();
 
 const emit = defineEmits<{
@@ -116,6 +117,7 @@ const onEnter = () => {
       @blur="onBlur"
       @keydown.enter.prevent="onEnter"
       @focus="onChange"
+      :class="props.className"
     />
     <div class="autocomplete-items" v-show="isShow">
       <div
@@ -146,7 +148,7 @@ const onEnter = () => {
   border-radius: 10px;
 }
 .on-error {
-  border: 2px solid var(--danger-color) !important;
+  border: 2px solid var(--text-danger) !important;
 }
 
 .autocomplete input:focus {

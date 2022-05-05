@@ -39,7 +39,7 @@ const props = defineProps(["id"]);
 
 const loading = ref(true);
 
-const errors = ref([] as Array<string>);
+const errors = ref(new Map<string, string>());
 
 let formData = reactive({
   id: null,
@@ -144,32 +144,39 @@ const removeImage = async (index: number) => {
 
 const checkInput = () => {
   if (Object.keys(formData.model).length === 0) {
-    errors.value.push("Please select a valid model");
+    errors.value.set("model", "Please select a valid model");
+    console.log(errors.value);
   }
   if (Object.keys(formData.color).length === 0) {
-    errors.value.push("Please select a color");
+    errors.value.set("color", "Please select a color");
   }
   if (Object.keys(formData.os_version).length === 0) {
-    errors.value.push("Please select an OS version");
+    errors.value.set("os_version", "Please select an OS version");
   }
   if (!formData.memory_size) {
-    errors.value.push("Please select a memory size");
+    errors.value.set("memory_size", "Please select a memory size");
   }
   if (!formData.price) {
-    errors.value.push("Please enter a price");
+    errors.value.set("price", "Please enter a price");
+  }
+  if (formData.price && formData.price < 0) {
+    errors.value.set("price", "Price cannot be negative");
   }
   if (formData.condition === "") {
-    errors.value.push("Please select a condition");
+    errors.value.set("condition", "Please select a condition");
   }
   if (formData.warranty_expiry === "") {
-    errors.value.push("Please select the warranty expiry date");
+    errors.value.set(
+      "warranty_expiry",
+      "Please select the warranty expiry date"
+    );
   }
 };
 
 const addItem = () => {
-  errors.value = [];
+  errors.value.clear;
   checkInput();
-  if (errors.value.length === 0) {
+  if (errors.value.size === 0) {
     saveInventory(formData)
       .then((res) => {
         if (res.status === 201) {
@@ -182,9 +189,9 @@ const addItem = () => {
 };
 
 const updateItem = (id: string) => {
-  errors.value = [];
+  errors.value.clear();
   checkInput();
-  if (errors.value.length === 0) {
+  if (errors.value.size === 0) {
     updateInventory(id, formData)
       .then((res) => {
         if (res.status === 200) {
@@ -237,7 +244,11 @@ const deleteItem = (id: string) => {
           v-model="formData.model"
           :value="formData.model.name ? formData.model.name : null"
           :brand="brand"
+          :className="errors.has('model') ? 'on-error' : undefined"
         />
+        <p class="error-text" v-if="errors.has('model')">
+          {{ errors.get("model") }}
+        </p>
       </div>
       <div class="input-group">
         <span class="label">Memory Size</span>
@@ -247,6 +258,7 @@ const deleteItem = (id: string) => {
             id="memory_sizes"
             class="custom-select"
             v-model="formData.memory_size"
+            :class="{ 'on-error': errors.has('memory_size') }"
           >
             <option disabled selected>--- Choose option ---</option>
             <option
@@ -266,6 +278,9 @@ const deleteItem = (id: string) => {
             <polyline points="1 1 5 5 9 1"></polyline>
           </symbol>
         </svg>
+        <p class="error-text" v-if="errors.has('memory_size')">
+          {{ errors.get("memory_size") }}
+        </p>
       </div>
       <div class="input-group">
         <span class="label">OS Version</span>
@@ -274,7 +289,11 @@ const deleteItem = (id: string) => {
           v-model="formData.os_version"
           :value="formData.os_version.name ? formData.os_version.name : null"
           :brand="brand"
+          :className="errors.has('os_version') ? 'on-error' : undefined"
         />
+        <p class="error-text" v-if="errors.has('os_version')">
+          {{ errors.get("os_version") }}
+        </p>
       </div>
       <div class="input-group">
         <span class="label">Color</span>
@@ -282,15 +301,35 @@ const deleteItem = (id: string) => {
           :items="colors"
           v-model="formData.color"
           :value="formData.color.name ? formData.color.name : null"
+          :className="errors.has('color') ? 'on-error' : undefined"
         />
+        <p class="error-text" v-if="errors.has('color')">
+          {{ errors.get("color") }}
+        </p>
       </div>
       <div class="input-group">
         <span class="label">Price</span>
-        <input type="number" v-model="formData.price" min="0" ref="input" />
+        <input
+          type="number"
+          v-model="formData.price"
+          min="0"
+          ref="input"
+          :class="{ 'on-error': errors.has('price') }"
+        />
+        <p class="error-text" v-if="errors.has('price')">
+          {{ errors.get("price") }}
+        </p>
       </div>
       <div class="input-group">
         <span class="label">Warranty</span>
-        <input type="date" v-model="formData.warranty_expiry" />
+        <input
+          type="date"
+          v-model="formData.warranty_expiry"
+          :class="{ 'on-error': errors.has('warranty_expiry') }"
+        />
+        <p class="error-text" v-if="errors.has('warranty_expiry')">
+          {{ errors.get("warranty_expiry") }}
+        </p>
       </div>
       <div class="input-group">
         <span class="label">Condition</span>
@@ -300,6 +339,7 @@ const deleteItem = (id: string) => {
             id="conditions"
             class="custom-select"
             v-model="formData.condition"
+            :class="{ 'on-error': errors.has('condition') }"
           >
             <option disabled selected>--- Choose option ---</option>
             <option
@@ -319,6 +359,9 @@ const deleteItem = (id: string) => {
             <polyline points="1 1 5 5 9 1"></polyline>
           </symbol>
         </svg>
+        <p class="error-text" v-if="errors.has('condition')">
+          {{ errors.get("condition") }}
+        </p>
       </div>
       <div class="input-group image-upload">
         <span class="label">Image</span>
@@ -336,14 +379,6 @@ const deleteItem = (id: string) => {
             <!-- <button @click="removeImage(index)">Remove</button> -->
           </div>
         </div>
-      </div>
-      <div
-        v-if="errors.length > 0"
-        style="color: var(--text-danger); flex-basis: 100%"
-      >
-        <ul>
-          <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-        </ul>
       </div>
       <div class="btn-container">
         <div>
@@ -420,7 +455,7 @@ const deleteItem = (id: string) => {
 }
 
 .on-error {
-  border: 2px solid var(--danger-color) !important;
+  border: 2px solid var(--text-danger) !important;
 }
 
 .previews-container {
@@ -553,5 +588,10 @@ router-link {
   padding: 15px;
   pointer-events: none;
   user-select: none;
+}
+
+.error-text {
+  color: var(--text-danger);
+  margin-top: 10px;
 }
 </style>
