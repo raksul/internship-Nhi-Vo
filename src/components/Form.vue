@@ -80,8 +80,6 @@ const getModelsByBrand = (id: number) => {
   if (brand) {
     models.value = brand.models;
   }
-
-  // console.log(models.value)
 };
 
 const getOSByBrand = (id: number) => {
@@ -92,7 +90,6 @@ const getOSByBrand = (id: number) => {
   if (brand) {
     os_versions.value = brand.os_version;
   }
-  // console.log(os_versions.value)
 };
 
 watch(
@@ -102,6 +99,33 @@ watch(
     getOSByBrand(brand.value.id);
   },
   { deep: true }
+);
+
+watch(
+  () => formData.model.name,
+  () => {
+    if (formData.model.name) {
+      errors.value.delete("model");
+    }
+  }
+);
+
+watch(
+  () => formData.os_version.name,
+  () => {
+    if (formData.os_version.name) {
+      errors.value.delete("os_version");
+    }
+  }
+);
+
+watch(
+  () => formData.color.name,
+  () => {
+    if (formData.color.name) {
+      errors.value.delete("color");
+    }
+  }
 );
 
 getBrands().then(() =>
@@ -145,7 +169,6 @@ const removeImage = async (index: number) => {
 const checkInput = () => {
   if (Object.keys(formData.model).length === 0) {
     errors.value.set("model", "Please select a valid model");
-    console.log(errors.value);
   }
   if (Object.keys(formData.color).length === 0) {
     errors.value.set("color", "Please select a color");
@@ -259,6 +282,7 @@ const deleteItem = (id: string) => {
             class="custom-select"
             v-model="formData.memory_size"
             :class="{ 'on-error': errors.has('memory_size') }"
+            @change="errors.delete('memory_size')"
           >
             <option disabled selected>--- Choose option ---</option>
             <option
@@ -315,6 +339,7 @@ const deleteItem = (id: string) => {
           min="0"
           ref="input"
           :class="{ 'on-error': errors.has('price') }"
+          @input="errors.delete('price')"
         />
         <p class="error-text" v-if="errors.has('price')">
           {{ errors.get("price") }}
@@ -326,6 +351,7 @@ const deleteItem = (id: string) => {
           type="date"
           v-model="formData.warranty_expiry"
           :class="{ 'on-error': errors.has('warranty_expiry') }"
+          @input="errors.delete('warranty_expiry')"
         />
         <p class="error-text" v-if="errors.has('warranty_expiry')">
           {{ errors.get("warranty_expiry") }}
@@ -340,6 +366,7 @@ const deleteItem = (id: string) => {
             class="custom-select"
             v-model="formData.condition"
             :class="{ 'on-error': errors.has('condition') }"
+            @change="errors.delete('condition')"
           >
             <option disabled selected>--- Choose option ---</option>
             <option
