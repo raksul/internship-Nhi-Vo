@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import InventoriesList from "../components/InventoriesList.vue";
+import InventoryList from "../components/InventoryList.vue";
 </script>
 
 <template>
   <div class="wrapper">
-    <InventoriesList />
+    <InventoryList />
   </div>
 </template>
 

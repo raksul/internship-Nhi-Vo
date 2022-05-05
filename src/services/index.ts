@@ -1,4 +1,4 @@
-import httpClient from "@/common/httpClient";
+import httpClient from "../common/httpClient";
 
 export const getInventories = () => {
   return httpClient.get(`inventories`);

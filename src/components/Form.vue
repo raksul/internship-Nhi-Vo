@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useBrandStore } from "@/stores/brands";
+import { useBrandStore } from "../stores/brands";
 import { reactive, ref, watch } from "vue";
 import { useInventoriesStore } from "../stores/inventories";
 import {
@@ -12,8 +12,8 @@ import {
 
 import Autocomplete from "./Autocomplete.vue";
 
-import { variants } from "@/data/variants.json";
-import type { Brand, Model, Option } from "@/stores/types";
+import { variants } from "../data/variants.json";
+import type { Brand, Model, Option } from "../stores/types";
 import axios from "axios";
 import { useRouter } from "vue-router";
 

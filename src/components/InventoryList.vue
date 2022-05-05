@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { useInventoriesStore } from "@/stores/inventories";
+import { useInventoriesStore } from "../stores/inventories";
 import ProductModal from "./ProductModal.vue";
 import Filter from "./InventoryFilters.vue";
 import { computed } from "@vue/reactivity";
 
-import type { Inventory } from "@/stores/types";
-import { updateStatus } from "@/services";
+import type { Inventory } from "../stores/types";
+import { updateStatus } from "../services";
 
 const store = useInventoriesStore();
 const { fetchInventories } = useInventoriesStore();
@@ -90,8 +90,17 @@ const markSold = (id: number) => {
         @click="showModal(item)"
       >
         <td data-label="Image">
-          <img class="thumbnail" :src="item.images[0]" alt="" />
+          <div v-if="item.images.length > 0">
+            <img class="thumbnail" :src="item.images[0]" alt="" />
+          </div>
+          <div v-else>
+            <img
+              class="thumbnail"
+              src="https://www.chanchao.com.tw/VTG/images/default.jpg"
+            />
+          </div>
         </td>
+
         <td data-label="Brand">{{ item.model.brand.name }}</td>
         <td data-label="Model">{{ item.model.name }}</td>
         <td data-label="Condition">{{ item.condition }}</td>

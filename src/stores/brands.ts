@@ -1,4 +1,4 @@
-import { getBrandById, getBrands } from "@/services";
+import { getBrandById, getBrands } from "../services";
 import { defineStore } from "pinia";
 import type { Brand } from "./types";
 

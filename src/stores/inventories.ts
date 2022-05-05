@@ -1,4 +1,4 @@
-import { getInventories, getInventoryById } from "@/services";
+import { getInventories, getInventoryById } from "../services";
 import { defineStore } from "pinia";
 import type { Inventory } from "./types";
 

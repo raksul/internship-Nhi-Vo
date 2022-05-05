@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import type { Inventory } from "@/stores/types";
 import { ref } from "vue";
 import ImageCarousel from "./ImageCarousel.vue";
 
-const props = defineProps(["item"]);
+const props = defineProps<{
+  item: Inventory;
+}>();
 defineEmits(["close"]);
 
 const item = ref(props.item);
@@ -25,9 +28,15 @@ const warrantyDisplay = (date: string) => {
       <section class="modal-body">
         <div class="container">
           <div style="flex-basis: 50%; text-align: center">
-            <!-- <img class="thumbnail" :src="item.images[0]" /> -->
-
-            <ImageCarousel :images="item.images" />
+            <div v-if="item.images.length > 0">
+              <ImageCarousel :images="item.images" />
+            </div>
+            <div v-else>
+              <img
+                class="thumbnail"
+                src="https://www.chanchao.com.tw/VTG/images/default.jpg"
+              />
+            </div>
 
             <p style="font-weight: bold">{{ item.model.name }}</p>
 
@@ -97,7 +106,7 @@ const warrantyDisplay = (date: string) => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -196,6 +205,7 @@ td {
   object-fit: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  margin-bottom: 10px;
 }
 
 .btn-edit {

@@ -334,9 +334,7 @@
       "price": 1000,
       "is_sold": false,
       "warranty_expiry": "2022-12-30",
-      "images": [
-        "https://i.imgur.com/omKDquN.jpg"
-      ]
+      "images": []
     },
     {
       "id": 8,

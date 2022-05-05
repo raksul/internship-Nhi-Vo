@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { useInventoriesStore } from "@/stores/inventories";
+import { useInventoriesStore } from "../stores/inventories";
 import { ref, watch } from "vue";
 
 const store = useInventoriesStore();
