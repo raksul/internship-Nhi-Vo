@@ -303,7 +303,7 @@
       },
       "condition": "Well used",
       "price": 999,
-      "is_sold": true,
+      "is_sold": false,
       "warranty_expiry": "2022-12-31",
       "images": [
         "https://i.imgur.com/ieNC1Ot.jpg"
@@ -359,7 +359,7 @@
       },
       "condition": "Like new",
       "price": 259,
-      "is_sold": false,
+      "is_sold": true,
       "warranty_expiry": "2021-12-31",
       "images": [
         "https://i.imgur.com/jd2pfBl.jpg",

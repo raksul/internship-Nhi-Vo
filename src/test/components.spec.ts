@@ -11,6 +11,37 @@ import Form from "../components/ProductForm.vue";
 
 const pinia = createTestingPinia();
 
+const item = {
+  id: 8,
+  model: {
+    id: 7,
+    brand: {
+      id: 2,
+      name: "Samsung",
+    },
+    name: "Samsung A52",
+    year: 2021,
+    display: 6.5,
+  },
+  os_version: {
+    id: 4,
+    name: "Android 12",
+  },
+  memory_size: 128,
+  color: {
+    id: 4,
+    name: "Purple",
+  },
+  condition: "Like new",
+  price: 259,
+  is_sold: false,
+  warranty_expiry: "2021-12-31",
+  images: [
+    "https://i.imgur.com/jd2pfBl.jpg",
+    "https://i.imgur.com/DuwY64M.jpg",
+  ],
+};
+
 beforeEach(() => {
   setActivePinia(pinia);
 });
@@ -46,7 +77,7 @@ describe("autocomplete", () => {
 describe("image slider", () => {
   const wrapper = shallowMount(ImageCarousel, {
     props: {
-      images: ["https://picsum.photos/200", "https://picsum.photos/200"],
+      images: item.images,
     },
   });
   it("renders correctly", () => {
@@ -58,36 +89,7 @@ describe("image slider", () => {
 describe("product modal", () => {
   const wrapper = shallowMount(ProductModal, {
     props: {
-      item: {
-        id: 8,
-        model: {
-          id: 7,
-          brand: {
-            id: 2,
-            name: "Samsung",
-          },
-          name: "Samsung A52",
-          year: 2021,
-          display: 6.5,
-        },
-        os_version: {
-          id: 4,
-          name: "Android 12",
-        },
-        memory_size: 128,
-        color: {
-          id: 4,
-          name: "Purple",
-        },
-        condition: "Like new",
-        price: 259,
-        is_sold: false,
-        warranty_expiry: "2021-12-31",
-        images: [
-          "https://i.imgur.com/jd2pfBl.jpg",
-          "https://i.imgur.com/DuwY64M.jpg",
-        ],
-      },
+      item: item,
     },
   });
 
@@ -100,7 +102,7 @@ describe("product modal", () => {
 describe("form", () => {
   const wrapper = shallowMount(Form, {
     props: {
-      id: 1,
+      id: item.id,
     },
   });
 

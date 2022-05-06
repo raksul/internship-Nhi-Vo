@@ -8,21 +8,21 @@ const props = defineProps<{
 
 const current = ref(0);
 
+const MAX_VISIBLE = 3;
+
 const start = ref(0);
-const end = ref(3);
+const end = computed(() => start.value + MAX_VISIBLE);
 
 const total = computed(() => props.images.length);
 
 const prev = () => {
   start.value = start.value === 0 ? 0 : start.value - 1;
-  end.value = start.value === 0 ? 3 : end.value - 1;
 
   current.value = current.value === 0 ? 0 : current.value - 1;
 };
 
 const next = () => {
   start.value = end.value >= total.value ? start.value : start.value + 1;
-  end.value = end.value >= total.value ? end.value : end.value + 1;
 
   current.value =
     current.value === total.value - 1 ? total.value - 1 : current.value + 1;

@@ -4,7 +4,7 @@ import ProductForm from "../components/ProductForm.vue";
 
 const inventoryStore = useInventoriesStore();
 
-inventoryStore.edit.status = true;
+inventoryStore.setEditStatus(true);
 </script>
 
 <template>

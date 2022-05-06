@@ -22,8 +22,6 @@ const conditions = ["Like new", "Well used", "Heavily used"];
 
 const inventoryStore = useInventoriesStore();
 
-// const { getBrands } = useBrandStore();
-
 const brands = ref([] as Array<Brand>);
 const models = ref([] as Array<Model>);
 const os_versions = ref([] as Array<Option>);

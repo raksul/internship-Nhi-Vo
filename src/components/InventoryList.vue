@@ -63,8 +63,7 @@ const markSold = (id: number) => {
   if (confirm("Mark this item as sold?")) {
     updateStatus(id.toString())
       .then(() => {
-        let index = store.inventories.findIndex((item) => item.id === id);
-        store.markAsSold(index);
+        store.markAsSold(id);
       })
       .catch((err) => console.log(err));
   }
