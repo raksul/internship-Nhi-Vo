@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useBrandStore } from "../stores/brands";
 import { reactive, ref, watch } from "vue";
 import { useInventoriesStore } from "../stores/inventories";
 import {
@@ -8,6 +7,7 @@ import {
   updateInventory,
   deleteInventory,
   getColors,
+  getBrands,
 } from "../services/index";
 
 import Autocomplete from "./Autocomplete.vue";
@@ -20,10 +20,9 @@ import { useRouter } from "vue-router";
 const memorySizes = [64, 128, 256, 512];
 const conditions = ["Like new", "Well used", "Heavily used"];
 
-const brandStore = useBrandStore();
 const inventoryStore = useInventoriesStore();
 
-const { getBrands } = useBrandStore();
+// const { getBrands } = useBrandStore();
 
 const brands = ref([] as Array<Brand>);
 const models = ref([] as Array<Model>);
@@ -128,11 +127,7 @@ watch(
   }
 );
 
-getBrands().then(() =>
-  brandStore.brands.forEach((brand) => {
-    brands.value.push(brand);
-  })
-);
+getBrands().then((res) => (brands.value = res.data));
 
 getColors()
   .then((res) => (colors.value = res.data))

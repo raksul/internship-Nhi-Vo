@@ -1,11 +1,11 @@
 import httpClient from "../common/httpClient";
 
-export const getInventories = () => {
-  return httpClient.get(`inventories`);
+export const getInventories = async () => {
+  return await httpClient.get(`inventories`);
 };
 
-export const getInventoryById = (id: string) => {
-  return httpClient.get(`inventories/${id}`);
+export const getInventoryById = async (id: string) => {
+  return await httpClient.get(`inventories/${id}`);
 };
 
 export const saveInventory = (data: object) => {
@@ -24,12 +24,12 @@ export const updateStatus = (id: string) => {
   return httpClient.patch(`inventories/${id}`, { is_sold: true });
 };
 
-export const getBrands = () => {
-  return httpClient.get(`brands`);
+export const getBrands = async () => {
+  return await httpClient.get(`brands`);
 };
 
-export const getBrandById = (id: string) => {
-  return httpClient.get(`brands/${id}`);
+export const getBrandById = async (id: string) => {
+  return await httpClient.get(`brands/${id}`);
 };
 
 export const getColors = () => {

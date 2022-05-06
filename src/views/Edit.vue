@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useInventoriesStore } from "../stores/inventories";
-import Form from "../components/Form.vue";
+import ProductForm from "../components/ProductForm.vue";
 
 const inventoryStore = useInventoriesStore();
 
@@ -8,9 +8,9 @@ inventoryStore.edit.status = true;
 </script>
 
 <template>
-  <Form>
+  <ProductForm>
     <template v-slot:title> Edit </template>
-  </Form>
+  </ProductForm>
 </template>
 
 <style scoped></style>
