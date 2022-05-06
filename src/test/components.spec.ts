@@ -5,12 +5,15 @@ import { setActivePinia } from "pinia";
 import InventoryList from "../components/InventoryList.vue";
 import Autocomplete from "../components/Autocomplete.vue";
 import InventoryFilters from "../components/InventoryFilters.vue";
-import ProductModal from "../components/ProductModal.vue";
+import ImageCarousel from "../components/ImageCarousel.vue";
+
+const pinia = createTestingPinia();
+
+beforeEach(() => {
+  setActivePinia(pinia);
+});
 
 describe("inventories list", () => {
-  const pinia = createTestingPinia();
-  setActivePinia(pinia);
-
   const wrapper = shallowMount(InventoryList, {
     global: {
       plugins: [pinia],
@@ -38,8 +41,8 @@ describe("autocomplete", () => {
   });
 });
 
-describe("product modal", () => {
-  const wrapper = shallowMount(ProductModal);
+describe("image slider", () => {
+  const wrapper = shallowMount(ImageCarousel);
 
   it("renders correctly", () => {
     expect(wrapper).toMatchSnapshot();

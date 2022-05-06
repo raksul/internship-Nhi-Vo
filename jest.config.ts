@@ -10,7 +10,7 @@ module.exports = {
   },
   globals: {
     "ts-jest": {
-      tsConfig: "<rootDir>/tsconfig.json",
+      tsconfig: "<rootDir>/tsconfig.json",
     },
   },
   testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
