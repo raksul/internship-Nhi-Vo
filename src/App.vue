@@ -7,7 +7,7 @@ import { RouterLink, RouterView } from "vue-router";
     <div class="app-bar">
       <RouterLink to="/" class="branding">
         Store Management
-        <font-awesome-icon :icon="['fas', 'mobile-screen-button']" />
+        <!-- <font-awesome-icon :icon="['fas', 'mobile-screen-button']" /> -->
       </RouterLink>
     </div>
     <RouterView />
