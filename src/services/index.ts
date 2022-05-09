@@ -32,6 +32,6 @@ export const getBrandById = async (id: string) => {
   return await httpClient.get(`brands/${id}`);
 };
 
-export const getColors = () => {
-  return httpClient.get(`colors`);
+export const getColors = async () => {
+  return await httpClient.get(`colors`);
 };

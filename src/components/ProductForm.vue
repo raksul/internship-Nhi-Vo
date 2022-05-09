@@ -69,6 +69,10 @@ if (props.id && inventoryStore.edit.status === true) {
   loading.value = false;
 }
 
+getBrands().then((res) => (brands.value = res.data));
+
+getColors().then((res) => (colors.value = res.data));
+
 const getModelsByBrand = (id: number) => {
   let brand = variants.find((i) => {
     return i.id === id;
@@ -124,12 +128,6 @@ watch(
     }
   }
 );
-
-getBrands().then((res) => (brands.value = res.data));
-
-getColors()
-  .then((res) => (colors.value = res.data))
-  .catch((err) => console.log(err));
 
 const config = {
   headers: {

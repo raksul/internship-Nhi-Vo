@@ -1,3 +1,3 @@
-const API_PATH = "http://localhost:3000";
+const API_PATH = "https://internship-nhivo.herokuapp.com";
 
 export default API_PATH;
