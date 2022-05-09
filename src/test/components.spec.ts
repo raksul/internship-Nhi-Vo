@@ -54,7 +54,7 @@ describe("inventories list", () => {
   });
 
   it("renders correctly", () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
 
@@ -62,7 +62,7 @@ describe("inventory filters", () => {
   const wrapper = shallowMount(InventoryFilters);
 
   it("renders correctly", () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
 
@@ -70,7 +70,7 @@ describe("autocomplete", () => {
   const wrapper = shallowMount(Autocomplete);
 
   it("renders correctly", () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
 
@@ -82,7 +82,7 @@ describe("image slider", () => {
   });
   it("renders correctly", () => {
     console.log(wrapper);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
 
@@ -95,7 +95,7 @@ describe("product modal", () => {
 
   it("renders correctly", () => {
     console.log(wrapper);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
 
@@ -108,6 +108,6 @@ describe("form", () => {
 
   it("renders correctly", () => {
     console.log(wrapper);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
