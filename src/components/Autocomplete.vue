@@ -44,7 +44,7 @@ watch(
 );
 
 watch(
-  () => props.brand,
+  () => props.brand?.id,
   () => {
     selectedOption.value = {} as T;
     keyword.value = "";

@@ -1,5 +1,11 @@
+import type { Inventory } from "@/stores/types";
 import { createPinia, setActivePinia } from "pinia";
 import { useInventoriesStore } from "../stores/inventories";
+
+const item = {
+  id: 8,
+  is_sold: false,
+};
 
 describe("Inventory Store", () => {
   beforeEach(() => {
@@ -15,5 +21,15 @@ describe("Inventory Store", () => {
     expect(store.edit.status).toBe(false);
     store.setEditStatus(true);
     expect(store.edit.status).toBe(true);
+  });
+
+  it("marks item as sold", () => {
+    const store = useInventoriesStore();
+
+    store.inventories.push(item as Inventory);
+
+    expect(store.inventories[0].is_sold).toBe(false);
+    store.markAsSold(item.id);
+    expect(store.inventories[0].is_sold).toBe(true);
   });
 });

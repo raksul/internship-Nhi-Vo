@@ -310,33 +310,6 @@
       ]
     },
     {
-      "id": 7,
-      "model": {
-        "id": 6,
-        "brand": {
-          "id": 1,
-          "name": "Apple"
-        },
-        "name": "iPhone 12 Pro",
-        "year": 2020,
-        "display": 6.1
-      },
-      "os_version": {
-        "id": 3,
-        "name": "iOS 14"
-      },
-      "memory_size": 512,
-      "color": {
-        "id": 2,
-        "name": "Blue"
-      },
-      "condition": "Well used",
-      "price": 1000,
-      "is_sold": false,
-      "warranty_expiry": "2022-12-30",
-      "images": []
-    },
-    {
       "id": 8,
       "model": {
         "id": 7,

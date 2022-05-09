@@ -36,10 +36,8 @@ export const useInventoriesStore = defineStore({
       this.edit.status = status;
     },
     markAsSold(id: number) {
-      const idx = this.inventories.findIndex((i) => i.id === id);
-      if (idx) {
-        this.inventories[idx].is_sold = true;
-      }
+      const idx = this.inventories.findIndex((i) => i.id == id);
+      this.inventories[idx].is_sold = true;
     },
   },
 });
