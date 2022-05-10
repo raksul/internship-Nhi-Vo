@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import type { Inventory } from "@/stores/types";
 import { ref } from "vue";
+
+import type { Inventory } from "@/stores/types";
+
 import ImageCarousel from "./ImageCarousel.vue";
 
 const props = defineProps<{

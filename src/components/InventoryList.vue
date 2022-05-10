@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { useInventoriesStore } from "../stores/inventories";
-import ProductModal from "./ProductModal.vue";
-import Filter from "./InventoryFilters.vue";
 import { computed } from "@vue/reactivity";
 
+import ProductModal from "./ProductModal.vue";
+import Filter from "./InventoryFilters.vue";
+
 import type { Inventory } from "../stores/types";
+import { useInventoriesStore } from "../stores/inventories";
+
 import { updateStatus } from "../services";
 
 const store = useInventoriesStore();

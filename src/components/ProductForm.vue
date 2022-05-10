@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
+import { useRouter } from "vue-router";
+
+import type { Brand, Model, Option } from "../stores/types";
 import { useInventoriesStore } from "../stores/inventories";
+
 import {
   getInventoryById,
   saveInventory,
@@ -9,13 +13,11 @@ import {
   getColors,
   getBrands,
 } from "../services/index";
-
-import Autocomplete from "./Autocomplete.vue";
+import { uploadImage } from "../services/images";
 
 import { variants } from "../data/variants.json";
-import type { Brand, Model, Option } from "../stores/types";
-import axios from "axios";
-import { useRouter } from "vue-router";
+
+import Autocomplete from "./Autocomplete.vue";
 
 const memorySizes = [64, 128, 256, 512];
 const conditions = ["Like new", "Well used", "Heavily used"];
@@ -68,14 +70,6 @@ if (props.id && inventoryStore.edit.status === true) {
 } else {
   loading.value = false;
 }
-
-getBrands()
-  .then((res) => (brands.value = res.data))
-  .catch((err) => console.log(err));
-
-getColors()
-  .then((res) => (colors.value = res.data))
-  .catch((err) => console.log(err));
 
 const getModelsByBrand = (id: number) => {
   let brand = variants.find((i) => {
@@ -133,19 +127,17 @@ watch(
   }
 );
 
-const config = {
-  headers: {
-    Authorization: "Client-ID b824a3f2d3cab53",
-    Accept: "application/json",
-  },
-};
+getBrands().then((res) => (brands.value = res.data));
+
+getColors()
+  .then((res) => (colors.value = res.data))
+  .catch((err) => console.log(err));
 
 const onFileChange = (e: Event) => {
   let file = (e.target as HTMLInputElement).files?.[0] as Blob;
 
   if (file) {
-    axios
-      .post(`https://api.imgur.com/3/image`, file, config)
+    uploadImage(file)
       .then((res) => {
         image.value = res.data.data.link;
         formData.images.push(image.value);
@@ -237,6 +229,16 @@ const deleteItem = (id: string) => {
       .catch((err) => {
         console.log(err);
       });
+  }
+};
+
+const back = () => {
+  if (
+    confirm(
+      "Are you sure you want to return to homepage? You will lose your data"
+    )
+  ) {
+    router.push("/");
   }
 };
 </script>
@@ -404,9 +406,7 @@ const deleteItem = (id: string) => {
       </div>
       <div class="btn-container">
         <div>
-          <router-link to="/"
-            ><button class="btn-back">Back</button></router-link
-          >
+          <button class="btn-back" @click="back">Back</button>
           <button
             v-if="inventoryStore.edit.status"
             class="btn-delete"

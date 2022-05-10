@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { Brand, T } from "@/stores/types";
-import { computed } from "@vue/reactivity";
 import { ref, watch } from "vue";
+import { computed } from "@vue/reactivity";
+
+import type { Brand, T } from "@/stores/types";
 
 const props = defineProps<{
   brand?: Brand;
