@@ -29,7 +29,7 @@ const query = (e: Event) => {
     <input type="text" class="filter" placeholder="Search..." @input="query" />
     <div class="select">
       <select class="custom-select" v-model="selected">
-        <option value="in-stock">In-stock items</option>
+        <option value="in_stock">In-stock items</option>
         <option value="all">All</option>
       </select>
       <svg>

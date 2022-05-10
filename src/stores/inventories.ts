@@ -1,6 +1,7 @@
 import { getInventories, getInventoryById } from "../services";
 import { defineStore } from "pinia";
 import type { Inventory } from "./types";
+import * as Constants from "../common/constants";
 
 export const useInventoriesStore = defineStore({
   id: "inventories",
@@ -8,15 +9,15 @@ export const useInventoriesStore = defineStore({
     inventories: [] as Array<Inventory>,
     inventory: {} as Inventory,
     edit: { status: false },
-    filter: "in-stock",
+    filter: Constants.IN_STOCK,
   }),
   getters: {
     getFiltered(state) {
-      if (state.filter === "in-stock") {
+      if (state.filter === Constants.IN_STOCK) {
         return state.inventories.filter((i) => {
           return i.is_sold === false;
         });
-      } else if (state.filter === "all") {
+      } else if (state.filter === Constants.ALL) {
         return state.inventories;
       }
     },

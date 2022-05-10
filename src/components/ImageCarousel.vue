@@ -2,13 +2,13 @@
 import { computed } from "@vue/reactivity";
 import { ref } from "vue";
 
+const MAX_VISIBLE = 3;
+
 const props = defineProps<{
   images: Array<string>;
 }>();
 
 const current = ref(0);
-
-const MAX_VISIBLE = 3;
 
 const start = ref(0);
 const end = computed(() => start.value + MAX_VISIBLE);
@@ -41,7 +41,7 @@ const next = () => {
       :key="index"
       :class="{ active: image === props.images[current] }"
     >
-      <img :src="image" />
+      <img :src="image" @click="current = index" />
     </div>
     <a class="next" @click="next">&#10095;</a>
   </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
-import API_PATH from "../common/constants";
+import * as Constants from "../common/constants";
 
-const httpClient = (baseURL: string = API_PATH) =>
+const httpClient = (baseURL: string = Constants.API_PATH) =>
   axios.create({
     baseURL,
   });
