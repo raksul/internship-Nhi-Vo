@@ -2,13 +2,14 @@
 import { ref, watch } from "vue";
 import { computed } from "@vue/reactivity";
 
-import type { Brand, T } from "@/stores/types";
+import type { Brand, T } from "../stores/types";
 
 const props = defineProps<{
   brand?: Brand;
   items: Array<T>;
   modelValue: T;
   value: string | null;
+  placeholder: string;
   className?: string | null;
 }>();
 
@@ -119,6 +120,7 @@ const onEnter = () => {
       @keydown.enter.prevent="onEnter"
       @focus="onChange"
       :class="props.className"
+      :placeholder="props.placeholder"
     />
     <div class="autocomplete-items" v-show="isShow">
       <div

@@ -49,8 +49,8 @@ const next = () => {
 
 <style scoped>
 .preview img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -67,8 +67,8 @@ const next = () => {
 }
 
 .slide img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   cursor: pointer;
   margin-right: 2px;

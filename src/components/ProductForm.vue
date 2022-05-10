@@ -17,7 +17,7 @@ import { uploadImage } from "../services/images";
 
 import { variants } from "../data/variants.json";
 
-import Autocomplete from "./Autocomplete.vue";
+import AutoComplete from "./AutoComplete.vue";
 
 const memorySizes = [64, 128, 256, 512];
 const conditions = ["Like new", "Well used", "Heavily used"];
@@ -44,7 +44,7 @@ let formData = reactive({
   id: null,
   model: {} as Model,
   os_version: {} as Option,
-  memory_size: null as number | null,
+  memory_size: "" as number | string,
   color: {} as Option,
   condition: "",
   price: null as number | null,
@@ -251,20 +251,22 @@ const back = () => {
     <form @submit.prevent>
       <div class="input-group">
         <span class="label">Brand</span>
-        <Autocomplete
+        <AutoComplete
           :items="brands"
           v-model="brand"
           :value="brand.name ? brand.name : null"
+          placeholder="Apple"
         />
       </div>
       <div class="input-group">
         <span class="label">Model</span>
-        <Autocomplete
+        <AutoComplete
           :items="models"
           v-model="formData.model"
           :value="formData.model.name ? formData.model.name : null"
           :brand="brand"
           :className="errors.has('model') ? 'on-error' : undefined"
+          placeholder="iPhone 11"
         />
         <p class="error-text" v-if="errors.has('model')">
           {{ errors.get("model") }}
@@ -274,20 +276,17 @@ const back = () => {
         <span class="label">Memory Size</span>
         <div class="select">
           <select
-            name="memory_sizes"
-            id="memory_sizes"
-            class="custom-select"
             v-model="formData.memory_size"
             :class="{ 'on-error': errors.has('memory_size') }"
             @change="errors.delete('memory_size')"
           >
-            <option disabled selected>--- Choose option ---</option>
+            <option value disabled selected>--- Choose option ---</option>
             <option
-              v-for="(memory, index) in memorySizes"
-              :value="memory"
+              v-for="(memorySize, index) in memorySizes"
+              :value="memorySize"
               :key="index"
             >
-              {{ memory }}GB
+              {{ memorySize }}
             </option>
           </select>
           <svg>
@@ -299,18 +298,19 @@ const back = () => {
             <polyline points="1 1 5 5 9 1"></polyline>
           </symbol>
         </svg>
-        <p class="error-text" v-if="errors.has('memory_size')">
-          {{ errors.get("memory_size") }}
+        <p class="error-text" v-if="errors.has('condition')">
+          {{ errors.get("condition") }}
         </p>
       </div>
       <div class="input-group">
         <span class="label">OS Version</span>
-        <Autocomplete
+        <AutoComplete
           :items="os_versions"
           v-model="formData.os_version"
           :value="formData.os_version.name ? formData.os_version.name : null"
           :brand="brand"
           :className="errors.has('os_version') ? 'on-error' : undefined"
+          placeholder="iOS 14"
         />
         <p class="error-text" v-if="errors.has('os_version')">
           {{ errors.get("os_version") }}
@@ -318,24 +318,26 @@ const back = () => {
       </div>
       <div class="input-group">
         <span class="label">Color</span>
-        <Autocomplete
+        <AutoComplete
           :items="colors"
           v-model="formData.color"
           :value="formData.color.name ? formData.color.name : null"
           :className="errors.has('color') ? 'on-error' : undefined"
+          placeholder="Red"
         />
         <p class="error-text" v-if="errors.has('color')">
           {{ errors.get("color") }}
         </p>
       </div>
       <div class="input-group">
-        <span class="label">Price</span>
+        <span class="label">Price (USD)</span>
         <input
           type="number"
           v-model="formData.price"
           min="0"
           ref="input"
           :class="{ 'on-error': errors.has('price') }"
+          placeholder="999"
           @input="errors.delete('price')"
         />
         <p class="error-text" v-if="errors.has('price')">
@@ -358,14 +360,11 @@ const back = () => {
         <span class="label">Condition</span>
         <div class="select">
           <select
-            name="conditions"
-            id="conditions"
-            class="custom-select"
             v-model="formData.condition"
             :class="{ 'on-error': errors.has('condition') }"
             @change="errors.delete('condition')"
           >
-            <option disabled selected>--- Choose option ---</option>
+            <option value="" disabled selected>--- Choose option ---</option>
             <option
               v-for="(condition, index) in conditions"
               :value="condition"

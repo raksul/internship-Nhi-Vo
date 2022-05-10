@@ -2,7 +2,6 @@
 import { ref } from "vue";
 
 import type { Inventory } from "@/stores/types";
-
 import ImageCarousel from "./ImageCarousel.vue";
 
 const props = defineProps<{
@@ -29,7 +28,7 @@ const warrantyDisplay = (date: string) => {
 
       <section class="modal-body">
         <div class="container">
-          <div style="flex-basis: 50%; text-align: center">
+          <div style="flex-basis: 60%; text-align: center">
             <div v-if="item.images.length > 0">
               <ImageCarousel :images="item.images" />
             </div>
@@ -44,7 +43,7 @@ const warrantyDisplay = (date: string) => {
 
             <button class="btn-edit" v-show="!item.is_sold">
               <router-link
-                style="text-decoration: none; color: #000"
+                style="text-decoration: none; color: #fff"
                 :to="{ name: 'edit', params: { id: item.id } }"
               >
                 <font-awesome-icon :icon="['fas', 'pen']" />
@@ -98,12 +97,6 @@ const warrantyDisplay = (date: string) => {
           </div>
         </div>
       </section>
-
-      <footer class="modal-footer">
-        <button type="button" class="btn-blue" @click="$emit('close')">
-          Close
-        </button>
-      </footer>
     </div>
   </div>
 </template>
@@ -122,7 +115,7 @@ const warrantyDisplay = (date: string) => {
 }
 
 .modal {
-  width: 450px;
+  width: 550px;
   background: #ffffff;
   box-shadow: 2px 2px 5px 1px rgba(124, 124, 124, 0.3);
   overflow-x: auto;
@@ -169,8 +162,8 @@ const warrantyDisplay = (date: string) => {
 
 .btn-blue {
   color: white;
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  background-color: rgb(205, 205, 205);
+  border: none;
   border-radius: 10px;
   padding: 10px;
   font-size: 18px;
@@ -201,6 +194,12 @@ td {
   font-weight: bold;
 }
 
+@media (min-width: 500px) {
+  .outline table th {
+    padding-right: 20px;
+  }
+}
+
 .thumbnail {
   width: 100px;
   height: 90px;
@@ -213,7 +212,7 @@ td {
 .btn-edit {
   margin-top: 10px;
   width: 100%;
-  background-color: rgb(205, 205, 205);
+  background: var(--primary-color);
   border: none;
   padding: 10px;
   border-radius: 10px;
