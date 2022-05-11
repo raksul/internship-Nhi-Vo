@@ -286,7 +286,7 @@ const back = () => {
               :value="memorySize"
               :key="index"
             >
-              {{ memorySize }}
+              {{ memorySize }}GB
             </option>
           </select>
           <svg>
@@ -404,7 +404,7 @@ const back = () => {
         </div>
       </div>
       <div class="btn-container">
-        <div>
+        <div class="sub-btn-container">
           <button class="btn-back" @click="back">Back</button>
           <button
             v-if="inventoryStore.edit.status"
@@ -495,16 +495,14 @@ const back = () => {
   position: absolute;
   background: transparent;
   color: #fff;
-  opacity: 0.5;
-  top: -8px;
-  right: 0;
+  opacity: 2;
+  top: 10px;
+  right: 10px;
   z-index: 999;
   font-size: 30px;
-}
-
-.btn-remove-img:hover {
-  color: #ff2828;
-  opacity: 2;
+  border: none;
+  cursor: pointer;
+  color: var(--text-danger);
 }
 
 .btn-container {
@@ -515,7 +513,8 @@ const back = () => {
   align-items: center;
 }
 
-button {
+.btn-container button {
+  width: 200px;
   padding: 14px;
   border: none;
   border-radius: 10px;
@@ -523,6 +522,18 @@ button {
   font-weight: 600;
   color: #fff;
   cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .btn-container button {
+    width: 120px;
+  }
+}
+
+@media (max-width: 500px) {
+  .btn-container button {
+    width: 80px;
+  }
 }
 
 .btn-save {

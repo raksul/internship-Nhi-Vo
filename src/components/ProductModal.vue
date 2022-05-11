@@ -136,12 +136,6 @@ const warrantyDisplay = (date: string) => {
   justify-content: space-between;
 }
 
-.modal-footer {
-  border-top: 1px solid #eeeeee;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
 .modal-body {
   position: relative;
   padding: 20px 15px;
